@@ -211,7 +211,7 @@ int main()
 	// auto const avg_bit = csc586::benchmark::benchmark(  csc586::unique::bit_based,    random_data );
 	// auto const avg_2loo = csc586::benchmark::benchmark( csc586::unique::two_loops{},  random_data );
 	// auto const avg_skip = csc586::benchmark::benchmark( csc586::unique::skip_based{}, random_data );
-	auto const BENS = csc586::benchmark::benchmark( csc586::unique::BENS,             random_data );
+	auto const avg_ben = csc586::benchmark::benchmark( csc586::unique::BENS,             random_data );
 
 	// Echo out the average run times.
 	// std::cout << "Average time per map-based call  = " << avg_map  << " us" << std::endl;
@@ -219,7 +219,7 @@ int main()
 	// std::cout << "Average time per two-loops call  = " << avg_2loo << " us" << std::endl;
 	// std::cout << "Average time per skip-based call = " << avg_skip << " us" << std::endl;
 	// std::cout << "Average time per sort-based call = " << avg_sort << " us" << std::endl;
-	std::cout << "Average time per BENS call       = " << BENS     << " us" << std::endl;
+	std::cout << "Average time per BENS call       = " << avg_ben     << " us" << std::endl;
 
 	return 0;
 }

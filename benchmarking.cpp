@@ -11,6 +11,29 @@
 // You may need to specify different file paths depending on how you have organised the files.
 #include "timing.hpp"
 #include "./unique_element.hpp"
+#include "./Node.h"
+
+
+// The random string generator to name each node 
+// https://github.com/InversePalindrome/Blog/blob/master/RandomString/RandomString.hpp
+
+std::string random_string(std::size_t length)
+{
+    const std::string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+    std::random_device random_device;
+    std::mt19937 generator(random_device());
+    std::uniform_int_distribution<> distribution(0, characters.size() - 1);
+
+    std::string random_string;
+
+    for (std::size_t i = 0; i < length; ++i)
+    {
+        random_string += characters[distribution(generator)];
+    }
+
+    return random_string;
+}
 
 /**
  * Creates and returns a vector pre-populated by repeatedly calling gen size times.
@@ -94,7 +117,10 @@ void mwe_benchmark()
 struct get_luv_vector
 {
 	// Another magic number, indicating the size of the vector that we will produce.
-	size_t static const n = 3200u;
+	// size_t static const n = 3200u; // may not need this
+	
+	// number of node?
+	u_int n = 1000;
 
 	/**
 	 * Generates a random test instance for our Lone Unique Value (LUV) problem.
@@ -109,26 +135,44 @@ struct get_luv_vector
 	 * Here, we need to ensure that the unique value we generate is not randomly also
 	 * generated as a pair, or it will no longer be unique.
 	 */
-	std::vector< uint32_t > operator() () const
+	std::vector< Node > operator() () const
 	{
 		// Declare the vector that we want to produce and indicate the amount of space it will use.
-		std::vector< uint32_t > vec;
-		vec.reserve( n + 1u );
+		std::vector< Node > vec;
+		// vec.reserve( n + 1u );
+		// vec.reserve(n);
 
 		// push one unique random val onto vector
 		// or'ing with 1 ensures the value (used as a multiplier below) cannot be zero, by setting
 		// the least significant bit
-		vec.push_back( std::rand() | 1u );
 
-		// Create n/2 pairs of random, duplicated values
-		for( auto i = 0u; i < n / 2; ++i )
+		for( auto i = 0u; i < n; ++i )
 		{
 			// create random val and push it twice onto vector
 			// by cancelling the least significant bit, we guarantee it does not match our unique value
 			auto const x = ( std::rand() & ~1u );
-			vec.push_back( x );
-			vec.push_back( x );
+			auto const y = ( std::rand() & ~1u );
+			std::string name = random_string(4);//giving it a random length of 4
+			
+			vec.push_back( Node(x,y,name) );
 		}
+
+
+
+
+		
+		//Now it should be even number
+		// vec.push_back( std::rand() | 1u );
+
+		// // Create n/2 pairs of random, duplicated values
+		// for( auto i = 0u; i < n / 2; ++i )
+		// {
+		// 	// create random val and push it twice onto vector
+		// 	// by cancelling the least significant bit, we guarantee it does not match our unique value
+		// 	auto const x = ( std::rand() & ~1u );
+		// 	vec.push_back( x );
+		// 	vec.push_back( x );
+		// }
 
 		// randomise order so that the solution is not always the first element in the vector
 		// without the shuffle, algorithms that break early would be advantaged
@@ -145,7 +189,8 @@ struct get_luv_vector
 int main()
 {
 	// Another magic number. *sigh*. Controls the number of test instances for our benchmark.
-	auto const num_test_instances = 100u;
+	// auto const num_test_instances = 100u;
+	auto const num_test_instances = 10;
 
 	// For random numbers, one must first seed the random number generator. This is the idiomatic
 	// approach for the random number generator libraries that we have chosen.
@@ -161,17 +206,20 @@ int main()
 										   );
 	
 	// Run the benchmark on each algorithm/implementation, recording the average time taken.
-	auto const avg_map = csc586::benchmark::benchmark(  csc586::unique::map_based{},  random_data );
-	auto const avg_sort = csc586::benchmark::benchmark( csc586::unique::sort_based{}, random_data );
-	auto const avg_bit = csc586::benchmark::benchmark(  csc586::unique::bit_based,    random_data );
-	auto const avg_2loo = csc586::benchmark::benchmark( csc586::unique::two_loops{},  random_data );
-	auto const avg_skip = csc586::benchmark::benchmark( csc586::unique::skip_based{}, random_data );
+	// auto const avg_map = csc586::benchmark::benchmark(  csc586::unique::map_based{},  random_data );
+	// auto const avg_sort = csc586::benchmark::benchmark( csc586::unique::sort_based{}, random_data );
+	// auto const avg_bit = csc586::benchmark::benchmark(  csc586::unique::bit_based,    random_data );
+	// auto const avg_2loo = csc586::benchmark::benchmark( csc586::unique::two_loops{},  random_data );
+	// auto const avg_skip = csc586::benchmark::benchmark( csc586::unique::skip_based{}, random_data );
+	auto const BENS = csc586::benchmark::benchmark( csc586::unique::BENS,             random_data );
 
 	// Echo out the average run times.
-	std::cout << "Average time per map-based call  = " << avg_map  << " us" << std::endl;
-	std::cout << "Average time per bit-based call  = " << avg_bit  << " us" << std::endl;
-	std::cout << "Average time per two-loops call  = " << avg_2loo << " us" << std::endl;
-	std::cout << "Average time per skip-based call = " << avg_skip << " us" << std::endl;
-	std::cout << "Average time per sort-based call = " << avg_sort << " us" << std::endl;
+	// std::cout << "Average time per map-based call  = " << avg_map  << " us" << std::endl;
+	// std::cout << "Average time per bit-based call  = " << avg_bit  << " us" << std::endl;
+	// std::cout << "Average time per two-loops call  = " << avg_2loo << " us" << std::endl;
+	// std::cout << "Average time per skip-based call = " << avg_skip << " us" << std::endl;
+	// std::cout << "Average time per sort-based call = " << avg_sort << " us" << std::endl;
+	std::cout << "Average time per BENS call       = " << BENS     << " us" << std::endl;
+
 	return 0;
 }

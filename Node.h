@@ -30,13 +30,13 @@ class Node
     }
 };
 
-// bool Nequal(Node a, Node b){
-//     if(a.x == b.x){
-//         if(a.y == b.y){
-//             if(a.name == b.name){
-//                 return true;
-//             }
-//         }
-//     }
-//     return false;
-// }
+bool equal(Node a, Node b){
+    if(a.x == b.x){
+        if(a.y == b.y){
+            if(a.name == b.name){
+                return true;
+            }
+        }
+    }
+    return false;
+}

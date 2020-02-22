@@ -8,6 +8,7 @@
 #include <algorithm> // std::for_each()
 #include <chrono>	 // timing libraries
 #include <iostream> // for outputting (printing) to streams (e.g., the terminal)
+#include "./Node.h"
 
 
 namespace csc586 {
@@ -61,7 +62,8 @@ template < typename Callable, typename Container >
 		// overhead to our benchmark.
 		// Nonetheless, try benchmarking our bit_based() algorithm without this accumulator in place
 		// and you'll see the importance of this small overhead!
-		output_type output = 0;
+		std::vector< Node > output;
+		int out_int = 0;
 
 		// starts the timer. We use the chrono library not just because it is the idiomatic approach,
 		// but also because it offers precision to the nanosecond, if we want it.
@@ -86,13 +88,20 @@ template < typename Callable, typename Container >
 		// the variables indicated in the brackets [].
 		std::for_each( std::cbegin( test_instances )
 					 , std::cend  ( test_instances )
-					 , [&output, f]( auto const& v ){ output = output + f(v); } );
+					 , [out_int, f]( auto const& v ){ out_int += &f(v)[0].x; } );
+
 
 		// end timer
 		auto const end_time = std::chrono::steady_clock::now();
 
 		// do something arbitrary with output. In this case, we print it out.
-		std::cout << output << std::endl;
+		// std::cout << output << std::endl;
+
+		for (int i = 0; i < output.size(); i++)
+    	{
+			std::cout<<"out of solution: \n";
+			output[i].print();
+    	}
 
 		// return average time
 		// the syntax for this library is a bit cumbersome...

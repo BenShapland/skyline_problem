@@ -12,7 +12,7 @@
 #include "timing.hpp"
 #include "./unique_element.hpp"
 // #include "./Node.h"
-
+using std::vector;
 
 // The random string generator to name each node 
 // https://github.com/InversePalindrome/Blog/blob/master/RandomString/RandomString.hpp
@@ -211,7 +211,7 @@ int main()
 	// auto const avg_bit = csc586::benchmark::benchmark(  csc586::unique::bit_based,    random_data );
 	// auto const avg_2loo = csc586::benchmark::benchmark( csc586::unique::two_loops{},  random_data );
 	// auto const avg_skip = csc586::benchmark::benchmark( csc586::unique::skip_based{}, random_data );
-	auto const avg_ben = csc586::benchmark::benchmark( csc586::unique::BENS,             random_data );
+	auto const avg_ben = csc586::benchmark::benchmark( csc586::unique::BENS,  random_data );
 
 	// Echo out the average run times.
 	// std::cout << "Average time per map-based call  = " << avg_map  << " us" << std::endl;

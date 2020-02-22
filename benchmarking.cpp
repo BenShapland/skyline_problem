@@ -1,22 +1,15 @@
-/**
- * A small application to time the relative performance of the five Lone Unique Value
- * solutions defined in ../intro-dm/unique_element.hpp
- */
 
 #include <iostream> // for outputting (printing) to streams (e.g., the terminal)
 #include <random> 	// std::rand, std::srand, std::default_random_engine
 #include <cmath>	// sqrt()
-
-// Here we include our other files, including the code we wrote on Friday.
-// You may need to specify different file paths depending on how you have organised the files.
 #include "timing.hpp"
-#include "./unique_element.hpp"
-// #include "./Node.h"
+#include "./solution.hpp"
+
+
 using std::vector;
 
 // The random string generator to name each node 
 // https://github.com/InversePalindrome/Blog/blob/master/RandomString/RandomString.hpp
-
 std::string random_string(std::size_t length)
 {
     const std::string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -82,7 +75,7 @@ void mwe_benchmark()
 	// The random test instances that we create are just single values, generated with the built-in random
 	// generator that produces non-negative values. By providing that lambda to build_rand_vec, we get n
 	// random, non-negative values on which to test the sqrt() function's performance.
-	auto const avg_time = csc586::benchmark::benchmark ( []( uint32_t const val ){ return sqrt( val ); }
+	auto const avg_time = timing::benchmark::benchmark ( []( uint32_t const val ){ return sqrt( val ); }
 													   , build_rand_vec(
 															[]() {
 															   	return static_cast< uint32_t >( std::rand() );
@@ -204,22 +197,10 @@ int main()
 	auto const random_data = build_rand_vec( get_luv_vector{}
 										   , num_test_instances
 										   );
-	
-	// Run the benchmark on each algorithm/implementation, recording the average time taken.
-	// auto const avg_map = csc586::benchmark::benchmark(  csc586::unique::map_based{},  random_data );
-	// auto const avg_sort = csc586::benchmark::benchmark( csc586::unique::sort_based{}, random_data );
-	// auto const avg_bit = csc586::benchmark::benchmark(  csc586::unique::bit_based,    random_data );
-	// auto const avg_2loo = csc586::benchmark::benchmark( csc586::unique::two_loops{},  random_data );
-	// auto const avg_skip = csc586::benchmark::benchmark( csc586::unique::skip_based{}, random_data );
-	auto const avg_ben = csc586::benchmark::benchmark( csc586::unique::BENS,  random_data );
+	auto const time = timing::benchmark::benchmark( skyline::solution::solve,  random_data );
 
-	// Echo out the average run times.
-	// std::cout << "Average time per map-based call  = " << avg_map  << " us" << std::endl;
-	// std::cout << "Average time per bit-based call  = " << avg_bit  << " us" << std::endl;
-	// std::cout << "Average time per two-loops call  = " << avg_2loo << " us" << std::endl;
-	// std::cout << "Average time per skip-based call = " << avg_skip << " us" << std::endl;
-	// std::cout << "Average time per sort-based call = " << avg_sort << " us" << std::endl;
-	std::cout << "Average time per BENS call       = " << avg_ben     << " us" << std::endl;
+
+	std::cout << "Average time per call       = " << time     << " us" << std::endl;
 
 	return 0;
 }

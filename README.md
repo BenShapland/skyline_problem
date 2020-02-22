@@ -3,3 +3,19 @@
 
 Interm Report 1 - editable from link
 https://docs.google.com/document/d/18KMW_xI_nk4Zgqg8r5NLPR1Y1j5IeWIYuVQxi610P9s/edit?usp=sharing
+
+
+Test files:
+    original_node.cpp
+    test.cpp (Need to implement)
+
+Files:
+    Node.h
+    solution.hpp
+    bechmarking.cpp 
+    timing.hpp
+
+
+Usage:
+    g++ -Wall -Og -std=c++17 benchmarking.cpp -o bench 
+    ./bench

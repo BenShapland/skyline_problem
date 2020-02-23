@@ -70,8 +70,6 @@ std::string solve ( std::vector< Node > const& input )
 }
 
 
-
-
 } 
 } 
 

@@ -13,7 +13,7 @@ using std::vector;
 
 
 bool Dominate(int ax,int ay, int bx, int by ){
-    if( ((ax > bx)&&(ay >= by)) || ((ax >= bx)&&(ay > by))){
+    if( ((ax < bx)&&(ay <= by)) || ((ax <= bx)&&(ay < by))){
 
         return true;
 

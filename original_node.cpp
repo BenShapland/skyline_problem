@@ -76,6 +76,8 @@ struct less_than_key
         return (struct1.x < struct2.x);
     }
 };
+
+
 vector<Node> sortSolve(vector<Node> input){
     
     sort(input.begin(),input.end(),less_than_key());
@@ -95,10 +97,6 @@ vector<Node> sortSolve(vector<Node> input){
     return best;
 
 }
-
-
-
-
 
 
 
@@ -131,7 +129,7 @@ int main()
     // cout<<"pre solution"<< skyline_paper.back().name;
     // cout<< "\n"<<sizeof(skyline_paper)/sizeof(skyline_paper[0])<<"\n";
     
-    shuffle( skyline_paper.begin(), skyline_paper.end(), default_random_engine{} );
+    // shuffle( skyline_paper.begin(), skyline_paper.end(), default_random_engine{} );
 
     vector<Node> solution= sortSolve(skyline_paper);
 
@@ -140,6 +138,15 @@ int main()
     {
         cout<<"out of solution: "<<solution.size();
         cout<<solution[i].print() << "\n";
+    }
+
+    vector<Node> sol= Solve(skyline_paper);
+
+    
+    for (int i = 0; i < sol.size(); i++)
+    {
+        cout<<"out of solution: "<<sol.size();
+        cout<<sol[i].print() << "\n";
     }
 
     

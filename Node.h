@@ -48,9 +48,9 @@ class Node
 bool equal(Node a, Node b){
     if(a.x == b.x){
         if(a.y == b.y){
-            if(a.name == b.name){
+            // if(a.name == b.name){
                 return true;
-            }
+            // }
         }
     }
     return false;

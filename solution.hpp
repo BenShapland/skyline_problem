@@ -11,12 +11,24 @@ namespace solution {
 using std::vector;
 
 bool Dominate(Node a, Node b){
-    if( ((a.x > b.x)&&(a.y >= b.y)) || ((a.x >= b.x)&&(a.y > b.y))){
+    if( ((a.x < b.x)&&(a.y <= b.y)) || ((a.x <= b.x)&&(a.y < b.y))){
 
         return true;
 
     }
     return false;
+}
+
+
+int test(std::vector< Node > const& skyline){
+
+    vector<Node> input = skyline;
+    for(int i=0;i<input.size();i++){
+        Node n =input[i];
+        std::cout<<"Input "<<n.print()<<"\n";
+    }
+    return 0;
+
 }
 
 std::string solve ( std::vector< Node > const& skyline )  
@@ -61,12 +73,13 @@ std::string solve ( std::vector< Node > const& skyline )
     for(auto i=0u;i<best.size();i++){
         Node n = best[i]; 
         ret = ret + n.name +" ";
-
+     
     }
     ret =ret+"\n";
 
     return ret;
 }
+
 
 std::string sort_solve ( std::vector< Node > const& skyline )  //const
 {
@@ -78,19 +91,27 @@ std::string sort_solve ( std::vector< Node > const& skyline )  //const
     
     for (size_t i = 1; i < input.size(); i++)
     {
-        if(best.back().y >input[i].y)
+        if(best.back().y > input[i].y)
         {
             best.push_back(input[i]);
         }
     }
 
+
+//  Testing
+    // vector<Node> test = best;
+    // for(int i=0;i<test.size();i++){
+    //     Node n =test[i];
+    //     std::cout<<"Output sort "<<n.print()<<"\n";
+    // }
+
+//
     std::string ret;   // save return value
     for(auto i=0u;i<best.size();i++){
         Node n = best[i]; 
         ret = ret + n.name +" ";
-
     }
-    ret =ret+"\n";
+    ret =ret +"\n";
 
     return ret;
 }

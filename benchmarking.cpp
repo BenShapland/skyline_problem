@@ -12,7 +12,7 @@ using std::vector;
 // https://github.com/InversePalindrome/Blog/blob/master/RandomString/RandomString.hpp
 std::string random_string(std::size_t length)
 {
-    const std::string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    const std::string characters = "abcdefghijklmnopqrstuvwxyz";
 
     std::random_device random_device;
     std::mt19937 generator(random_device());
@@ -109,10 +109,8 @@ void mwe_benchmark()
  */
 struct get_luv_vector
 {
-	// Another magic number, indicating the size of the vector that we will produce.
-	// size_t static const n = 3200u; // may not need this
-	
-	// number of node?
+	// size of the vector that we will produce.
+
 	u_int n = 1000;
 
 	/**
@@ -143,8 +141,8 @@ struct get_luv_vector
 		{
 			// create random val and push it twice onto vector
 			// by cancelling the least significant bit, we guarantee it does not match our unique value
-			auto const x = ( std::rand() & ~1u );
-			auto const y = ( std::rand() & ~1u );
+			auto const x = ( std::rand()  & ~1u );
+			auto const y = ( std::rand()  & ~1u );
 			std::string name = random_string(4);//giving it a random length of 4
 			
 			vec.push_back( Node(x,y,name) );
@@ -183,7 +181,7 @@ int main()
 {
 	// Another magic number. *sigh*. Controls the number of test instances for our benchmark.
 	// auto const num_test_instances = 100u;
-	auto const num_test_instances = 10;
+	auto const num_test_instances = 2;
 
 	// For random numbers, one must first seed the random number generator. This is the idiomatic
 	// approach for the random number generator libraries that we have chosen.
@@ -197,6 +195,7 @@ int main()
 	auto const random_data = build_rand_vec( get_luv_vector{}
 										   , num_test_instances
 										   );
+	// auto const test = timing::benchmark::benchmark( skyline::solution::test,  random_data );
 	auto const time_solve = timing::benchmark::benchmark( skyline::solution::solve,  random_data );
 	auto const time_sort = timing::benchmark::benchmark( skyline::solution::sort_solve,  random_data );
 

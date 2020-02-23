@@ -15,6 +15,8 @@ using std::vector;
 std::string random_string(std::size_t length)
 {
 
+    const std::string characters = "abcdefghijklmnopqrstuvwxyz";
+
     std::random_device random_device;
     std::mt19937 generator(random_device());
     std::uniform_int_distribution<> distribution(0, characters.size() - 1);

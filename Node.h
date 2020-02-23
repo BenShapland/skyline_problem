@@ -18,11 +18,6 @@ class Node
 		name=c;
     }
 
-    void jumble(){
-        srand(time(NULL));
-        x= rand() % 100;
-        y= rand() % 100;
-    }
     std::string print(){
         std::string out = name + " (" + std::to_string(x) + "," + std::to_string(y) + ")";
         return out;
@@ -48,8 +43,8 @@ class Node
 bool equal(Node a, Node b){
     if(a.x == b.x){
         if(a.y == b.y){
-            // if(a.name == b.name){
-                return true;
+            // if(a.name == b.name){   // Test name also - better cache without
+                return true; 
             // }
         }
     }

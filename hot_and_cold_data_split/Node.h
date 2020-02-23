@@ -25,7 +25,7 @@ class Node
 
 bool equal(int x1,int y1, std::string n1, int x2,int y2, std::string n2 ){
 
-    if( (x1 == x2) && (y1== y2 ) && (n1== n2 ) )
+    if( (x1 == x2) && (y1== y2 )  ) //&& (n1== n2 )
         return true;
 
     return false;

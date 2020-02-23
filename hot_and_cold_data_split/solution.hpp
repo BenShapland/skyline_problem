@@ -39,7 +39,7 @@ std::string  solve (Node const& input )
             count = 0;
             for(auto k = 0u; k<best.x.size(); k++){
                 // if nothing dominates input
-    //             //add it to best
+                //add it to best
                 if(Dominate(best.x[k],best.y[k] ,input.x[i],input.y[i] ) || (equal(best.x[k],best.y[k],best.name[k], input.x[i], input.y[i], input.name[i] )) ){
                     count --;
                 }
@@ -48,16 +48,15 @@ std::string  solve (Node const& input )
                 best.add(input.x[i],input.y[i],input.name[i] );
                 // input[i].print();
                 update = true;
-                
-            }
-    //         //if any input doms any of best
-    //         //add it and remove what it doms
-            for(auto j = 0u; j<best.x.size(); j++){
-                if(Dominate(input.x[i],input.y[i],best.x[j],best.y[j])){
-                    best.x.erase(best.x.begin()+ j); // x
-                    best.y.erase(best.y.begin()+ j); // y
-                    best.name.erase(best.name.begin()+ j); // name
+                //if any input doms any of best
+                //add it and remove what it doms
+                for(auto j = 0u; j<best.x.size(); j++){
+                    if(Dominate(input.x[i],input.y[i],best.x[j],best.y[j])){
+                        best.x.erase(best.x.begin()+ j); // x
+                        best.y.erase(best.y.begin()+ j); // y
+                        best.name.erase(best.name.begin()+ j); // name
 
+                    }
                 }
             }
         }

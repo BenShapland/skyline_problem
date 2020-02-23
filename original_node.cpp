@@ -51,14 +51,13 @@ vector<Node> Solve(vector<Node> input){
             if(count == 0){
                 best.push_back(input[i]);
                 input[i].print();
-                update = true;
-                
-            }
-            //if any input doms any of best
-            //add it and remove what it doms
-            for(int j = 0; j<best.size(); j++){
-                if(Dominate(input[i],best[j])){
-                    best.erase(best.begin()+ j);
+                update = true;            
+                // if any input doms any of best
+                // add it and remove what it doms
+                for(int j = 0; j<best.size(); j++){
+                    if(Dominate(input[i],best[j])){
+                        best.erase(best.begin()+ j);
+                    }
                 }
             }
         }
@@ -108,22 +107,30 @@ int main()
 { 
 
     vector<Node> skyline_paper;
+    // skyline_paper.push_back(Node(1,12,"a"));
+    // skyline_paper.push_back(Node(2,7,"b"));
+    // skyline_paper.push_back(Node(4,22,"c"));
+    // skyline_paper.push_back(Node(5,14,"d"));
+    // skyline_paper.push_back(Node(6,5,"e"));
+    // skyline_paper.push_back(Node(8,19,"f"));
+    // skyline_paper.push_back(Node(9,9,"g"));
+    // skyline_paper.push_back(Node(10,4,"h"));
+    // skyline_paper.push_back(Node(12,13,"i"));
+    // skyline_paper.push_back(Node(15,15,"j"));
+    // skyline_paper.push_back(Node(15,22,"k"));
+    // skyline_paper.push_back(Node(16,6,"l"));
+    // skyline_paper.push_back(Node(17,10,"m"));
+    // skyline_paper.push_back(Node(17,20,"n"));
+    // skyline_paper.push_back(Node(21,3,"0"));
+    // skyline_paper.push_back(Node(22,14,"p"));
+
     skyline_paper.push_back(Node(1,12,"a"));
-    skyline_paper.push_back(Node(2,7,"b"));
-    skyline_paper.push_back(Node(4,22,"c"));
-    skyline_paper.push_back(Node(5,14,"d"));
-    skyline_paper.push_back(Node(6,5,"e"));
-    skyline_paper.push_back(Node(8,19,"f"));
-    skyline_paper.push_back(Node(9,9,"g"));
-    skyline_paper.push_back(Node(10,4,"h"));
-    skyline_paper.push_back(Node(12,13,"i"));
-    skyline_paper.push_back(Node(15,15,"j"));
-    skyline_paper.push_back(Node(15,22,"k"));
-    skyline_paper.push_back(Node(16,6,"l"));
-    skyline_paper.push_back(Node(17,10,"m"));
-    skyline_paper.push_back(Node(17,20,"n"));
-    skyline_paper.push_back(Node(21,3,"0"));
-    skyline_paper.push_back(Node(22,14,"p"));
+    skyline_paper.push_back(Node(2,13,"C"));
+
+    skyline_paper.push_back(Node(1,12,"b"));
+    skyline_paper.push_back(Node(1,12,"c"));
+    skyline_paper.push_back(Node(1,12,"d"));
+
 
 
     // cout<<"pre solution"<< skyline_paper.back().name;
@@ -131,7 +138,7 @@ int main()
     
     // shuffle( skyline_paper.begin(), skyline_paper.end(), default_random_engine{} );
 
-    vector<Node> solution= sortSolve(skyline_paper);
+    vector<Node> solution= Solve(skyline_paper);
 
     
     for (int i = 0; i < solution.size(); i++)

@@ -1,6 +1,3 @@
-
-// Simple C++ program to display "Hello World" 
-  
 #include<iostream>  
 #include<vector>
 #include<random>
@@ -14,8 +11,6 @@
 
 using namespace std; 
 using std::vector;
-
-
 
 
 // ------------------------------------------------------------------------------------//

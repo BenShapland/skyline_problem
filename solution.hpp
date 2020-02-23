@@ -65,8 +65,31 @@ std::string solve ( std::vector< Node > const& input )
     ret =ret+"\n";
 
     return ret;
+}
 
-	
+std::string sort_solve ( std::vector< Node > & input )  //constant
+{
+    sort(input.begin(),input.end());
+    vector<Node> best;
+    best.push_back(input[0]);
+    
+    for (size_t i = 1; i < input.size(); i++)
+    {
+        if(best.back().y >input[i].y)
+        {
+            best.push_back(input[i]);
+        }
+    }
+
+    std::string ret;   // save return value
+    for(auto i=0u;i<best.size();i++){
+        Node n = best[i]; 
+        ret = ret + n.name +" ";
+
+    }
+    ret =ret+"\n";
+
+    return ret;
 }
 
 

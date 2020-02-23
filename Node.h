@@ -23,16 +23,23 @@ class Node
         x= rand() % 100;
         y= rand() % 100;
     }
-
-
-    void print(){
-        std::cout<<name<<"("<<x<<","<<y<<")"<< '\n';
+    std::string print(){
+        std::string out = name + " (" + std::to_string(x) + "," + std::to_string(y) + ")";
+        return out;
     }
 
     void set(int a, int b, std::string c){
         x=a;
         y=b;
         name = c;
+    }
+    
+    bool operator < (const Node& str) const
+    {
+        if(x == str.x){
+            return (y < str.y);
+        }
+        return (x < str.x);
     }
 };
 

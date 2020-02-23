@@ -29,6 +29,14 @@ class Node
         y=b;
         name = c;
     }
+    
+    bool operator < (const Node& str) const
+    {
+        if(x == str.x){
+            return (y < str.y);
+        }
+        return (x < str.x);
+    }
 };
 
 bool equal(Node a, Node b){

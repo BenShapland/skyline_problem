@@ -30,7 +30,9 @@ class Node
         name = c;
     }
     
-    bool operator < (const Node& str) const
+    // bool operator < (const Node& str) const
+    bool operator < (const Node& str)const
+
     {
         if(x == str.x){
             return (y < str.y);

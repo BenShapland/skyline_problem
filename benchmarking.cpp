@@ -197,10 +197,14 @@ int main()
 	auto const random_data = build_rand_vec( get_luv_vector{}
 										   , num_test_instances
 										   );
-	auto const time = timing::benchmark::benchmark( skyline::solution::solve,  random_data );
+	auto const time_solve = timing::benchmark::benchmark( skyline::solution::solve,  random_data );
+	auto const time_sort = timing::benchmark::benchmark( skyline::solution::sort_solve,  random_data );
 
 
-	std::cout << "Average time per call       = " << time     << " us" << std::endl;
+
+	std::cout << "Average time per call       = " << time_solve    << " us" << std::endl;
+	std::cout << "Average time per call       = " << time_sort    << " us" << std::endl;
+
 
 	return 0;
 }

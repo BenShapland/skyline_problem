@@ -19,11 +19,12 @@ bool Dominate(Node a, Node b){
     return false;
 }
 
-std::string solve ( std::vector< Node > const& input )  
+std::string solve ( std::vector< Node > const& skyline )  
 {
-	assert( "Vector contains data" && ! input.empty() );
+	// assert( "Vector contains data" && ! input.empty() );
    	std::vector< Node > best;
 
+    vector<Node> input = skyline;
 
     bool update = true;
     int count =0;
@@ -67,9 +68,11 @@ std::string solve ( std::vector< Node > const& input )
     return ret;
 }
 
-std::string sort_solve ( std::vector< Node > & input )  //constant
+std::string sort_solve ( std::vector< Node > const& skyline )  //const
 {
+    vector<Node> input = skyline;
     sort(input.begin(),input.end());
+
     vector<Node> best;
     best.push_back(input[0]);
     

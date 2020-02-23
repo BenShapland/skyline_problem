@@ -58,7 +58,7 @@ std::string solve ( std::vector< Node > const& input )
 
     std::string ret;   // save return value
     for(auto i=0u;i<best.size();i++){
-        Node n = best[0]; 
+        Node n = best[i]; 
         ret = ret + n.name +" ";
 
     }

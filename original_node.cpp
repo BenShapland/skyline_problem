@@ -17,7 +17,7 @@ using std::vector;
 //dominating - has greater x and or y 
 //not looking at equal cases 
 bool Dominate(Node a, Node b){
-    if( ((a.x > b.x)&&(a.y >= b.y)) || ((a.x >= b.x)&&(a.y > b.y))){
+    if( ((a.x < b.x)&&(a.y <= b.y)) || ((a.x <= b.x)&&(a.y < b.y))){
         // a.print();
         // b.print();
         return true;
@@ -76,9 +76,9 @@ int main()
     vector<Node> skyline_paper;
     skyline_paper.push_back(Node(1,12,"a"));
     skyline_paper.push_back(Node(2,7,"b"));
-    skyline_paper.push_back(Node(3,22,"c"));
+    skyline_paper.push_back(Node(4,22,"c"));
     skyline_paper.push_back(Node(5,14,"d"));
-    skyline_paper.push_back(Node(6,12,"e"));
+    skyline_paper.push_back(Node(6,5,"e"));
     skyline_paper.push_back(Node(8,19,"f"));
     skyline_paper.push_back(Node(9,9,"g"));
     skyline_paper.push_back(Node(10,4,"h"));

@@ -56,13 +56,12 @@ std::string solve ( std::vector< Node > const& skyline )
                 best.push_back(input[i]);
                 // input[i].print();
                 update = true;
-                
-            }
-            //if any input doms any of best
-            //add it and remove what it doms
-            for(auto j = 0u; j<best.size(); j++){
-                if(Dominate(input[i],best[j])){
-                    best.erase(best.begin()+ j);
+                //if any input doms any of best
+                //add it and remove what it doms
+                for(auto j = 0u; j<best.size(); j++){
+                    if(Dominate(input[i],best[j])){
+                        best.erase(best.begin()+ j);
+                    }
                 }
             }
         }

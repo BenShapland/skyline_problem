@@ -9,11 +9,13 @@ https://docs.google.com/document/d/1wsWvpQUKmiKB0Odzt9YEmOPK0mVC1a3SuqWjgiESaeM/
 
 
 AoS
+
     Node.h
     solution.hpp
     bechmarking.cpp 
     timing.hpp
-
+    original_node.cpp
+  
 
 SoA-hot_and_cold_data_split
 
@@ -21,6 +23,7 @@ SoA-hot_and_cold_data_split
     solution.hpp
     bechmarking.cpp 
     timing.hpp
+    original_node.cpp
 
 
 Usage:

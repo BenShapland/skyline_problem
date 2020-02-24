@@ -27,6 +27,9 @@ SoA-hot_and_cold_data_split
 
 
 Usage:
-    cd AoS OR cd hot_and_cold_data_split 
+''' 
+    cd AoS OR
+    cd hot_and_cold_data_split 
     g++ -Wall -Og -std=c++17 benchmarking.cpp -o bench 
     ./bench
+'''

@@ -26,7 +26,6 @@ std::string  solve (Node const& input )
     assert(input.x.size() == input.y.size());
     assert(input.x.size()== input.name.size());
     
-
    	Node best;
     
     bool update = true;
@@ -40,7 +39,7 @@ std::string  solve (Node const& input )
             for(auto k = 0u; k<best.x.size(); k++){
                 // if nothing dominates input
                 //add it to best
-                if(Dominate(best.x[k],best.y[k] ,input.x[i],input.y[i] ) || (equal(best.x[k],best.y[k],best.name[k], input.x[i], input.y[i], input.name[i] )) ){
+                if(Dominate(best.x[k],best.y[k] ,input.x[i],input.y[i] ) || (equal(best.x[k],best.y[k], input.x[i], input.y[i])) ){
                     count --;
                 }
             }
@@ -62,7 +61,6 @@ std::string  solve (Node const& input )
         }
     }
 
-
     std::string ret;   // save return value
 
 
@@ -77,6 +75,7 @@ std::string  solve (Node const& input )
 
 	
 }
+
 
 
 } 

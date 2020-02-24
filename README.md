@@ -8,11 +8,15 @@ Good Copy:
 https://docs.google.com/document/d/1wsWvpQUKmiKB0Odzt9YEmOPK0mVC1a3SuqWjgiESaeM/edit?usp=sharing
 
 
-Test files:
-    original_node.cpp
-    test.cpp (Need to implement)
+AoS
+    Node.h
+    solution.hpp
+    bechmarking.cpp 
+    timing.hpp
 
-Files:
+
+SoA-hot_and_cold_data_split
+
     Node.h
     solution.hpp
     bechmarking.cpp 
@@ -20,5 +24,6 @@ Files:
 
 
 Usage:
+    cd AoS OR cd hot_and_cold_data_split 
     g++ -Wall -Og -std=c++17 benchmarking.cpp -o bench 
     ./bench

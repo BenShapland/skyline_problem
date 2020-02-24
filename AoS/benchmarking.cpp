@@ -87,7 +87,7 @@ struct skyline_vec
 {
 
 
-	u_int n = 10000;  // Number of node
+	u_int n = 20000;  // Number of node
 
 
 	std::vector< Node > operator() () const
@@ -112,10 +112,6 @@ struct skyline_vec
 
 
 
-		// randomise order so that the solution is not always the first element in the vector
-		// without the shuffle, algorithms that break early would be advantaged
-		std::shuffle( vec.begin(), vec.end(), std::default_random_engine{} );
-
 		return vec;
 	}
 };
@@ -127,7 +123,7 @@ struct skyline_vec
 int main()
 {
 
-	auto const num_test_instances = 10;  
+	auto const num_test_instances = 50;  
 
 	// For random numbers, one must first seed the random number generator. This is the idiomatic
 	// approach for the random number generator libraries that we have chosen.

@@ -89,7 +89,7 @@ void mwe_benchmark()
 struct skyline_vec
 {
 
-	u_int n = 10000;  // Number of data in arrays
+	u_int n = 20000;  // Number of data in arrays
 
 
 	Node  operator() () const
@@ -123,7 +123,7 @@ struct skyline_vec
 int main()
 {
 
-	auto const num_test_instances = 10;
+	auto const num_test_instances = 50;
 
 	// For random numbers, one must first seed the random number generator. This is the idiomatic
 	// approach for the random number generator libraries that we have chosen.
@@ -137,7 +137,6 @@ int main()
 										   , num_test_instances
 										   );
 	auto const time = timing::benchmark::benchmark( skyline::solution::solve,  random_data );
-
 
 	std::cout << "Average time per call       = " << time     << " us" << std::endl;
 

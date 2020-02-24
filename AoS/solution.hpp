@@ -79,11 +79,11 @@ std::string solve ( std::vector< Node > const& skyline )
     return ret;
 }
 
-
+// Time comp : n + nlog(n)
 std::string sort_solve ( std::vector< Node > const& skyline )  //const
 {
     vector<Node> input = skyline;
-    sort(input.begin(),input.end());
+    sort(input.begin(),input.end()); 
 
     vector<Node> best;
     best.push_back(input[0]);
@@ -97,14 +97,7 @@ std::string sort_solve ( std::vector< Node > const& skyline )  //const
     }
 
 
-//  Testing
-    // vector<Node> test = best;
-    // for(int i=0;i<test.size();i++){
-    //     Node n =test[i];
-    //     std::cout<<"Output sort "<<n.print()<<"\n";
-    // }
 
-//
     std::string ret;   // save return value
     for(auto i=0u;i<best.size();i++){
         Node n = best[i]; 

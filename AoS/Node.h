@@ -9,7 +9,7 @@ class Node
     Node(){
         x = 0;
         y = 0;
-        name = "I was born NAME-LESS";
+        name = "abcd";
     }
 
 	Node(int a ,int b, std::string c){
@@ -43,9 +43,7 @@ class Node
 bool equal(Node a, Node b){
     if(a.x == b.x){
         if(a.y == b.y){
-            // if(a.name == b.name){   // Test name also - better cache without
                 return true; 
-            // }
         }
     }
     return false;

@@ -4,7 +4,9 @@
 #include <cmath>	// sqrt()
 #include "timing.hpp"
 
+// #include "./solution.hpp"
 #include "./solution.hpp"
+
 
 
 
@@ -89,7 +91,7 @@ void mwe_benchmark()
 struct skyline_vec
 {
 
-	u_int n = 20000;  // Number of data in arrays
+	u_int n = 2000000;  // Number of data in arrays
 
 
 	Node  operator() () const
@@ -137,8 +139,12 @@ int main()
 										   , num_test_instances
 										   );
 	auto const time = timing::benchmark::benchmark( skyline::solution::solve,  random_data );
+	auto const time_parallel = timing::benchmark::benchmark( skyline::solution::solve_parallel,  random_data );
+
 
 	std::cout << "Average time per call       = " << time     << " us" << std::endl;
+	std::cout << "Average time per call       = " << time_parallel     << " us" << std::endl;
+
 
 	return 0;
 }

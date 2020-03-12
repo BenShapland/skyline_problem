@@ -33,7 +33,7 @@ std::string  solve (Node const& input )
    	Node best;  // vector of nodes
     bool update = true;
 
-    
+    // int count_best = 0;
     int count =0;
 
 
@@ -53,6 +53,7 @@ std::string  solve (Node const& input )
 
             if(count == 0){
                 best.add(input.xy[i].x,input.xy[i].y,input.name[i] );  // Best Updated fukkkk
+                // count_best +=1;
                 // update = true;
               
                 for(auto j = 0u; j<best.xy.size(); j++){
@@ -67,7 +68,7 @@ std::string  solve (Node const& input )
         }
    
     // }
-
+    // std::cout<<"count_best:  "<<count_best<< "\n";
     std::string ret;   // save return value
 
 
@@ -93,7 +94,7 @@ std::string  solve_parallel (Node const& input )
 
  
     int count =0;
-    int num_cores =6;  // Ensure num_cores are even
+    int num_cores =1;  // Ensure num_cores are even
 
 // one best node for each thread?
     for(int i=0;i<num_cores;i++){
@@ -102,7 +103,7 @@ std::string  solve_parallel (Node const& input )
     }
 
 
-
+    // int th_id =0; // test
     #pragma omp parallel for num_threads( num_cores )
     for (auto i =0u ; i <  input.xy.size(); i++)
 
@@ -110,6 +111,7 @@ std::string  solve_parallel (Node const& input )
         
         count = 0;
         auto const th_id = omp_get_thread_num(); 
+
         for(auto k = 0u; k<best[th_id].xy.size(); k++){
     
             if(Dominate(best[th_id].xy[k].x,best[th_id].xy[k].y ,input.xy[i].x,input.xy[i].y ) || (equal(best[th_id].xy[k].x,best[th_id].xy[k].y, input.xy[i].x, input.xy[i].y)) ){
@@ -121,6 +123,7 @@ std::string  solve_parallel (Node const& input )
 
         if(count == 0){
             best[th_id].add(input.xy[i].x,input.xy[i].y,input.name[i] );  
+
             
             for(auto j = 0u; j<best[th_id].xy.size(); j++){
                 if(Dominate(input.xy[i].x,input.xy[i].y,best[th_id].xy[j].x,best[th_id].xy[j].y)){
@@ -146,8 +149,6 @@ std::string  solve_parallel (Node const& input )
     // }
 
 
-
-
     return "Test";
 
     // std::string ret;   // save return value
@@ -164,7 +165,6 @@ std::string  solve_parallel (Node const& input )
 
 
 /// ----------------Parallel End---------------------------------/
-
 
 
 

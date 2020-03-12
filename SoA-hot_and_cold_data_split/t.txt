@@ -1,3 +1,0 @@
-    out.name.reserve( combine0_1.name.size() + combine2.name.size() ); // preallocate memorname
-    out.name.insert( out.name.end(), combine0_1.name.begin(), combine0_1.name.end() );
-    out.name.insert( out.name.end(), combine2.name.begin(), combine2.name.end() );

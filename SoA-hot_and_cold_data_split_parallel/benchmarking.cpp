@@ -114,7 +114,9 @@ struct skyline_vec
 
 		}
 
+		// std::cout<<"print";
 		return nn ;
+
 	}
 };
 
@@ -138,10 +140,15 @@ int main()
 	auto const random_data = build_rand_vec( skyline_vec{}
 										   , num_test_instances
 										   );
+	
+	std::cout<<("test bench");
+	
 	auto const time = timing::benchmark::benchmark( skyline::solution::solve,  random_data );
+	// auto const time_parallel = timing::benchmark::benchmark( skyline::solution::solve_parallel,  random_data );
 
 
 	std::cout << "Average time per call       = " << time     << " us" << std::endl;
+	// std::cout << "Average time per call       = " << time_parallel     << " us" << std::endl;
 
 
 	return 0;

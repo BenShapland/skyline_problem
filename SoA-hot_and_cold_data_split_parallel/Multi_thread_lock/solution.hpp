@@ -120,7 +120,7 @@ std::string  solve_parallel (Node const& input )
     for (auto i =0u ; i <  input.xy.size(); i++) 
     {
 
-        int written = 0;
+        int written = 0;  
         int dom =0;
         // // auto const th_id = omp_get_thread_num(); 
 
@@ -133,15 +133,16 @@ std::string  solve_parallel (Node const& input )
             if(Dominate(input.xy[i].x,input.xy[i].y,  best.xy[k].x,best.xy[k].y  ) ){  // Input Dominate Best ->  Good input -> Save it
                 // lock best[k]
 
+
                 // write input[i] to best[k]
-                // best.xy[k] = input.xy[i];
+                // best.xy[k] = input.xy[i]; ?
                 best.xy[k].x = input.xy[i].x;
                 best.xy[k].y = input.xy[i].y;
                 best.name[k] = input.name[i];
 
 
                 written = 1;
-                break;
+                // break;
 
             }
 
@@ -152,9 +153,11 @@ std::string  solve_parallel (Node const& input )
                 break;
             }
 
+
         } // loop best
 
 
+                     
 
         if(dom==0   && written==0){
 
@@ -175,6 +178,9 @@ std::string  solve_parallel (Node const& input )
     } // for input
 
     
+    assert(best.xy.size() == best.name.size());
+
+    // Need to Remove Duplicates
     
 
 
@@ -183,8 +189,6 @@ std::string  solve_parallel (Node const& input )
 
 
     std::string ret;   // save return value
-
-
     for(auto i=0u;i<best.name.size();i++){
         ret = ret + best.name[i] +" ";
 

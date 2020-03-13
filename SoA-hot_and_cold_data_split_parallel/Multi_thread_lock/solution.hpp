@@ -6,6 +6,7 @@
 #include <iostream> 
 #include <omp.h>    // for multi-core parallelism
 
+// #include "point-data.hpp"
 
 
 namespace skyline {
@@ -24,7 +25,7 @@ bool Dominate(int ax,int ay, int bx, int by ){
 }
 
 
-std::string  solve (Node const& input )  
+std::string  solve_old (Node const& input )  
 {
 
     assert(input.xy.size() == input.name.size());
@@ -33,168 +34,150 @@ std::string  solve (Node const& input )
    	Node best;  // vector of nodes
     bool update = true;
 
-    // int count_best = 0;
+
     int count =0;
 
 
-    // while(update){
-        for (auto i =0u ; i <  input.xy.size(); i++)
-        { 
-            // update = false;
-            count = 0;
-            for(auto k = 0u; k<best.xy.size(); k++){
-       
-                if(Dominate(best.xy[k].x,best.xy[k].y ,input.xy[i].x,input.xy[i].y ) || (equal(best.xy[k].x,best.xy[k].y, input.xy[i].x, input.xy[i].y)) ){
-                    count --;
-                    break;
-                }
 
+    for (auto i =0u ; i <  input.xy.size(); i++)
+    { 
+        count = 0;
+        for(auto k = 0u; k<best.xy.size(); k++){
+    
+            if(Dominate(best.xy[k].x,best.xy[k].y ,input.xy[i].x,input.xy[i].y ) || (equal(best.xy[k].x,best.xy[k].y, input.xy[i].x, input.xy[i].y)) ){
+                count --;
+                break;
             }
 
-            if(count == 0){
-                best.add(input.xy[i].x,input.xy[i].y,input.name[i] );  
-                // count_best +=1;
-                // update = true;
-              
-                for(auto j = 0u; j<best.xy.size(); j++){
-                    if(Dominate(input.xy[i].x,input.xy[i].y,best.xy[j].x,best.xy[j].y)){
-                        best.xy.erase(best.xy.begin()+ j); // x
-                        // best.y.erase(best.y.begin()+ j); // y
-                        best.name.erase(best.name.begin()+ j); // name
-
-                    }
-                }
-
-            } //  Input Dom all of best
         }
-   
-    // }
-    // std::cout<<"count_best:  "<<count_best<< "\n";
+
+        if(count == 0){
+            best.add(input.xy[i].x,input.xy[i].y,input.name[i] );  
+
+            
+            for(auto j = 0u; j<best.xy.size(); j++){
+                if(Dominate(input.xy[i].x,input.xy[i].y,best.xy[j].x,best.xy[j].y)){
+                    best.xy.erase(best.xy.begin()+ j); // x
+                    best.name.erase(best.name.begin()+ j); // name
+
+                }
+            }
+
+        } //  Input Dom all of best
+    }
+
     std::string ret;   // save return value
-
-
+    std::cout<<"\n";
     for(auto i=0u;i<best.name.size();i++){
     
-        ret = ret + best.name[i] +" ";
+        // ret = ret + best.name[i] +" ";
+        std::cout<<best.name[i] + " "  <<best.xy[i].x <<" " << best.xy[i].y << "\n";
 
     }
-    ret =ret+"\n";
+    // ret =ret+"\n";
 
-    return ret;
+    return "test\n";
 
 
 } 
 
 /// ------------------Parallel Start-------------------------------/
-std::string  solve_parallel (Node const& input )  
+std::string  solve (Node const& input )  
 {
     
-    // std::cout<<"Starting";
-    int size_best = 1000;
+    int size_best = 100000;
     std::vector<XY> values;
     values.reserve(size_best);
-    // values.size(); //returns 0
-    // std::cout<<"values.size before: "<<values.size()<<"\n";
-
+  
+    int num_cores =6;
 
     std::vector<std::string> n;
     n.reserve(size_best);
-    n.size(); //returns 0
+    n.size(); 
 
     Node best;
     best.xy = values;
     best.name = n;
 
-    // int written =0;
-    // int dom =0;
-
-// // Init locks in array lock
-//     omp_lock_t lock[size_best];
-//     for (int i=0; i<size_best; i++)
-//         omp_init_lock(&(lock[i]));
-
 
     // parallel
     // #pragma omp parallel for num_threads( num_cores )
-    // #pragma omp parallel for num_threads(  1) shared(best, lock, input) default(none)
     for (auto i =0u ; i <  input.xy.size(); i++) 
+        // #pragma omp critical 
+        // {
     {
 
-        int written = 0;  
-        int dom =0;
         // // auto const th_id = omp_get_thread_num(); 
+        bool written = false;  
+        bool dom =false;
 
         for(auto k = 0u; k<best.xy.size(); k++){  // compare input and best
 
 
             // if index best locked -> wait 
             // else we continue
-    
+           
             if(Dominate(input.xy[i].x,input.xy[i].y,  best.xy[k].x,best.xy[k].y  ) ){  // Input Dominate Best ->  Good input -> Save it
-                // lock best[k]
-
-
+        //   
+// 
+                // #pragma omp critical 
+                // {
+                // if(Dominate(input.xy[i].x,input.xy[i].y,  best.xy[k].x,best.xy[k].y  ) ){
                 // write input[i] to best[k]
-                // best.xy[k] = input.xy[i]; ?
+    
                 best.xy[k].x = input.xy[i].x;
                 best.xy[k].y = input.xy[i].y;
                 best.name[k] = input.name[i];
-
-
-                written = 1;
-                // break;
+                written = true;
+            
+                // }
+                // }
 
             }
 
-            // dominate * dom ??
-            else if(Dominate(best.xy[k].x,best.xy[k].y,input.xy[i].x,input.xy[i].y ))  // Best dominate Input -> Input not needed
+         
+            // else if(Dominate(best.xy[k].x,best.xy[k].y,input.xy[i].x,input.xy[i].y ))  // Best dominate Input -> Input not needed
+            else if(Dominate(best.xy[k].x,best.xy[k].y ,input.xy[i].x,input.xy[i].y ) || (equal(best.xy[k].x,best.xy[k].y, input.xy[i].x, input.xy[i].y)) )
             {
-                dom = 1;
+                dom = true;
                 break;
             }
 
-
         } // loop best
 
+        if( !dom   && !written){
 
-                     
-
-        if(dom==0   && written==0){
-
-        //     // lock best.size(-1)
-        //     std::cout<<"best.size before: "<<best.xy.size();
-            best.add(input.xy[i].x,input.xy[i].y,input.name[i] );  
-        //     std::cout<<"best.size after: "<<best.xy.size()<<"\n";
-        //     // best.xy[best.xy.size()-1] = input.xy[i];
-        //     // best.name[best.name.size()-1] = input.name[i];
-
-        //     // unlock
-
+            XY xy_node( input.xy[i].x,input.xy[i].y);
+            // #pragma omp critical
+            // {
+            best.xy.push_back(xy_node) ;
+            best.name.push_back(input.name[i]); 
         }
 
+    }
+
+        // }
 
 
-
-    } // for input
+    // } // for input
 
     
     assert(best.xy.size() == best.name.size());
 
-    // Need to Remove Duplicates
+
+    // return solve(best);
+
+    // std::string ret;   // save return value
+    // std::cout<<"\n";
+    // for(auto i=0u;i<best.name.size();i++){
     
+    //     // ret = ret + best.name[i] +" ";
+    //     std::cout<<best.name[i] + " "  <<best.xy[i].x <<" " << best.xy[i].y << "\n";
 
+    // }
+    // // ret =ret+"\n";
 
-
-
-
-
-    std::string ret;   // save return value
-    for(auto i=0u;i<best.name.size();i++){
-        ret = ret + best.name[i] +" ";
-
-    }
-    ret =ret+"\n";
-    return ret;
+    return "test\n";
 
 
 
@@ -204,6 +187,105 @@ std::string  solve_parallel (Node const& input )
 /// ----------------Parallel End---------------------------------/
 
 
+std::string  solve_parallel (Node const& input )  
+{
+    
+    int size_best = 100000;
+    std::vector<XY> values;
+    values.reserve(size_best);
+  
+    int num_cores =6;
+
+    std::vector<std::string> n;
+    n.reserve(size_best);
+    n.size(); 
+
+    Node best;
+    best.xy = values;
+    best.name = n;
+
+
+    // parallel
+    #pragma omp parallel for num_threads( num_cores )
+    for (auto i =0u ; i <  input.xy.size(); i++) 
+    {
+
+        // // auto const th_id = omp_get_thread_num(); 
+        bool written = false;  
+        bool dom =false;
+
+        for(auto k = 0u; k<best.xy.size(); k++){  // compare input and best
+
+
+            // if index best locked -> wait 
+            // else we continue
+           
+            if(Dominate(input.xy[i].x,input.xy[i].y,  best.xy[k].x,best.xy[k].y  ) ){  // Input Dominate Best ->  Good input -> Save it
+        //   
+// 
+                #pragma omp critical 
+                {
+                    if(Dominate(input.xy[i].x,input.xy[i].y,  best.xy[k].x,best.xy[k].y  ) ){
+                    // write input[i] to best[k]
+        
+                    best.xy[k].x = input.xy[i].x;
+                    best.xy[k].y = input.xy[i].y;
+                    best.name[k] = input.name[i];
+                    written = true;
+                    }
+                }
+
+            }
+
+         
+            // else if(Dominate(best.xy[k].x,best.xy[k].y,input.xy[i].x,input.xy[i].y ))  // Best dominate Input -> Input not needed
+            else if(Dominate(best.xy[k].x,best.xy[k].y ,input.xy[i].x,input.xy[i].y ) || (equal(best.xy[k].x,best.xy[k].y, input.xy[i].x, input.xy[i].y)) )
+            {
+                dom = true;
+                break;
+            }
+
+        } // loop best
+
+        if( !dom   && !written){
+
+            XY xy_node( input.xy[i].x,input.xy[i].y);
+            #pragma omp critical
+            {
+            best.xy.push_back(xy_node) ;
+            best.name.push_back(input.name[i]); 
+        
+            }
+        }
+
+    }
+
+        // }
+
+
+    // } // for input
+
+    
+    assert(best.xy.size() == best.name.size());
+
+
+    // return solve(best);
+
+    // std::string ret;   // save return value
+    // std::cout<<"\n";
+    // for(auto i=0u;i<best.name.size();i++){
+    
+    //     // ret = ret + best.name[i] +" ";
+    //     std::cout<<best.name[i] + " "  <<best.xy[i].x <<" " << best.xy[i].y << "\n";
+
+    // }
+    // // ret =ret+"\n";
+
+    return "test\n";
+
+
+
+} // End func
 
 
 void merge(Node n1,Node n2){
@@ -232,3 +314,6 @@ void merge(Node n1,Node n2){
 } 
 }
 #endif 
+
+
+

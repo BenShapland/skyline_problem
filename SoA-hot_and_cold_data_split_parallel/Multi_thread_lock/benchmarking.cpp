@@ -6,6 +6,7 @@
 
 // #include "./solution.hpp"
 #include "./solution.hpp"
+// #include "point-data.hpp"
 
 
 
@@ -91,7 +92,7 @@ void mwe_benchmark()
 struct skyline_vec
 {
 
-	u_int n = 20000;  // Number of data in arrays
+	u_int n = 50000;  // Number of data in arrays
 
 
 	Node  operator() () const
@@ -105,8 +106,8 @@ struct skyline_vec
 		Node nn;
 		for( auto i = 0u; i < n; ++i )
 		{
-			auto const x = ( std::rand() & ~1u );
-			auto const y = ( std::rand() & ~1u );
+			auto const x = ( std::rand() % 500 & ~1u );
+			auto const y = ( std::rand() % 500 & ~1u );
 			std::string name = random_string(4);//giving it a random length of 4
 
 
@@ -147,9 +148,14 @@ int main()
 	auto const time_parallel = timing::benchmark::benchmark( skyline::solution::solve_parallel,  random_data );
 
 // 
-	std::cout << "Average time per call       = " << time     << " us" << std::endl;
-	std::cout << "Average time per call       = " << time_parallel     << " us" << std::endl;
+	std::cout << "Average time per call solve      = " << time     << " us" << std::endl;
+	std::cout << "Average time per call  PARALLEL     = " << time_parallel     << " us" << std::endl;
 
 
 	return 0;
 }
+
+
+                           
+
+         

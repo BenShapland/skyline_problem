@@ -182,6 +182,7 @@ std::string  solve (Node const& input )
     bool GOT_IT = false;
     vector<std::string>done;   // save return value
     for(auto i=0u;i<best.name.size();i++){
+        GOT_IT = false;
         for(auto j=0u;j<done.size();j++){
         //if not in Done add and breake
             if(done[j] == best.name[i]){
@@ -195,6 +196,8 @@ std::string  solve (Node const& input )
         }
     }
     ret =ret+"\n";
+
+
 
 
     

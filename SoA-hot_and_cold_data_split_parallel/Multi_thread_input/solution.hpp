@@ -37,45 +37,38 @@ std::string  solve (Node const& input )
     int count =0;
 
 
-    // while(update){
-        for (auto i =0u ; i <  input.xy.size(); i++)
-        { 
-            // update = false;
-            count = 0;
-            for(auto k = 0u; k<best.xy.size(); k++){
-       
-                if(Dominate(best.xy[k].x,best.xy[k].y ,input.xy[i].x,input.xy[i].y ) || (equal(best.xy[k].x,best.xy[k].y, input.xy[i].x, input.xy[i].y)) ){
-                    count --;
-                    break;
-                }
-
+    for (auto i =0u ; i <  input.xy.size(); i++)
+    { 
+;
+        count = 0;
+        for(auto k = 0u; k<best.xy.size(); k++){
+    
+            if(Dominate(best.xy[k].x,best.xy[k].y ,input.xy[i].x,input.xy[i].y ) || (equal(best.xy[k].x,best.xy[k].y, input.xy[i].x, input.xy[i].y)) ){
+                count --;
+                break;
             }
 
-            if(count == 0){
-                best.add(input.xy[i].x,input.xy[i].y,input.name[i] );  // Best Updated fukkkk
-                // count_best +=1;
-                // update = true;
-              
-                for(auto j = 0u; j<best.xy.size(); j++){
-                    if(Dominate(input.xy[i].x,input.xy[i].y,best.xy[j].x,best.xy[j].y)){
-                        best.xy.erase(best.xy.begin()+ j); // x
-                        // best[th_id].y.erase(best[th_id].y.begin()+ j); // y
-                        best.name.erase(best.name.begin()+ j); // name
+        }
 
-                    }
+        if(count == 0){
+            best.add(input.xy[i].x,input.xy[i].y,input.name[i] );  
+
+            for(auto j = 0u; j<best.xy.size(); j++){
+                if(Dominate(input.xy[i].x,input.xy[i].y,best.xy[j].x,best.xy[j].y)){
+                    best.xy.erase(best.xy.begin()+ j); 
+                    best.name.erase(best.name.begin()+ j); 
+
                 }
             }
         }
+    }
    
-    // }
-    // std::cout<<"count_best:  "<<count_best<< "\n";
+ 
     std::string ret;   // save return value
 
 
     for(auto i=0u;i<best.name.size();i++){
-    
         ret = ret + best.name[i] +" ";
-
     }
     ret =ret+"\n";
 
@@ -84,7 +77,7 @@ std::string  solve (Node const& input )
 
 } 
 
-/// ------------------Parallel Start-------------------------------/
+
 std::string  solve_parallel (Node const& input )  
 {
 
@@ -94,19 +87,18 @@ std::string  solve_parallel (Node const& input )
 
  
     int count =0;
-    int num_cores =1;  // Ensure num_cores are even
+    int num_cores =6;  // Ensure num_cores are even
 
-// one best node for each thread?
+// one best node for each thread
     for(int i=0;i<num_cores;i++){
         Node best_thread;
         best.push_back(best_thread);
     }
 
 
-    // int th_id =0; // test
+  
     #pragma omp parallel for num_threads( num_cores )
     for (auto i =0u ; i <  input.xy.size(); i++)
-
     { 
         
         count = 0;
@@ -134,40 +126,17 @@ std::string  solve_parallel (Node const& input )
                 }
             }
         }
-    }  // end for
 
 
 
+    // Merge Best And Re run
+    // Too slow -> Merging all best the rerunning takes more time than the non parallized solution
+    // Need a better solution!
 
+    // Imconplete
 
-
-    // int num_core_merge = num_cores/2; 
-    // #pragma omp parallel num_threads( num_cores )
-    // {
-    // auto const xyz = omp_get_thread_num();  // 0 or 1
-    // merge(best[xyz* 2],best[xyz*2+1]);
-    // }
-
-
-    return "Test";
-
-    // std::string ret;   // save return value
-    // for(auto i=0u;i<best.name.size();i++){
-    
-    //     ret = ret + best.name[i] +" ";
-
-    // }
-    // ret =ret+"\n";
-    // return ret;
-
-
-} // End func
-
-
-/// ----------------Parallel End---------------------------------/
-
-
-
+}
+}
 
 void merge(Node n1,Node n2){
 
@@ -185,7 +154,7 @@ void merge(Node n1,Node n2){
 
 
 
-} // 
+} 
 
 
 

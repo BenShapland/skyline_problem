@@ -204,7 +204,6 @@ std::string  solve_parallel (Node const& input )
 
 
 
-
 } 
 }
 #endif 

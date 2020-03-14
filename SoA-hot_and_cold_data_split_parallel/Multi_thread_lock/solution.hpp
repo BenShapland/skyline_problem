@@ -24,62 +24,62 @@ bool Dominate(int ax,int ay, int bx, int by ){
     return false;
 }
 
+//BROKEN
+// std::string  solve_old (Node const& input )  
+// {
 
-std::string  solve_old (Node const& input )  
-{
-
-    assert(input.xy.size() == input.name.size());
+//     assert(input.xy.size() == input.name.size());
     
     
-   	Node best;  // vector of nodes
-    bool update = true;
+//    	Node best;  // vector of nodes
+//     bool update = true;
 
 
-    int count =0;
+//     int count =0;
 
 
 
-    for (auto i =0u ; i <  input.xy.size(); i++)
-    { 
-        count = 0;
-        for(auto k = 0u; k<best.xy.size(); k++){
+//     for (auto i =0u ; i <  input.xy.size(); i++)
+//     { 
+//         count = 0;
+//         for(auto k = 0u; k<best.xy.size(); k++){
     
-            if(Dominate(best.xy[k].x,best.xy[k].y ,input.xy[i].x,input.xy[i].y ) || (equal(best.xy[k].x,best.xy[k].y, input.xy[i].x, input.xy[i].y)) ){
-                count --;
-                break;
-            }
+//             if(Dominate(best.xy[k].x,best.xy[k].y ,input.xy[i].x,input.xy[i].y ) || (equal(best.xy[k].x,best.xy[k].y, input.xy[i].x, input.xy[i].y)) ){
+//                 count --;
+//                 break;
+//             }
 
-        }
+//         }
 
-        if(count == 0){
-            best.add(input.xy[i].x,input.xy[i].y,input.name[i] );  
+//         if(count == 0){
+//             best.add(input.xy[i].x,input.xy[i].y,input.name[i] );  
 
             
-            for(auto j = 0u; j<best.xy.size(); j++){
-                if(Dominate(input.xy[i].x,input.xy[i].y,best.xy[j].x,best.xy[j].y)){
-                    best.xy.erase(best.xy.begin()+ j); // x
-                    best.name.erase(best.name.begin()+ j); // name
+//             for(auto j = 0u; j<best.xy.size(); j++){
+//                 if(Dominate(input.xy[i].x,input.xy[i].y,best.xy[j].x,best.xy[j].y)){
+//                     best.xy.erase(best.xy.begin()+ j); // x
+//                     best.name.erase(best.name.begin()+ j); // name
 
-                }
-            }
+//                 }
+//             }
 
-        } //  Input Dom all of best
-    }
+//         } //  Input Dom all of best
+//     }
 
-    std::string ret;   // save return value
-    std::cout<<"\n";
-    for(auto i=0u;i<best.name.size();i++){
+//     std::string ret;   // save return value
+//     std::cout<<"\n";
+//     for(auto i=0u;i<best.name.size();i++){
     
-        // ret = ret + best.name[i] +" ";
-        std::cout<<best.name[i] + " "  <<best.xy[i].x <<" " << best.xy[i].y << "\n";
+//         // ret = ret + best.name[i] +" ";
+//         std::cout<<best.name[i] + " "  <<best.xy[i].x <<" " << best.xy[i].y << "\n";
 
-    }
-    // ret =ret+"\n";
+//     }
+//     ret =ret+"\n";
 
-    return "test\n";
+//     // return "test\n";
 
 
-} 
+// } 
 
 /// ------------------Parallel Start-------------------------------/
 std::string  solve (Node const& input )  
@@ -175,9 +175,32 @@ std::string  solve (Node const& input )
     //     std::cout<<best.name[i] + " "  <<best.xy[i].x <<" " << best.xy[i].y << "\n";
 
     // }
-    // // ret =ret+"\n";
+    // ret =ret+"\n";
+    // return ret;
 
-    return "test\n";
+    std::string ret;
+    bool GOT_IT = false;
+    vector<std::string>done;   // save return value
+    for(auto i=0u;i<best.name.size();i++){
+        for(auto j=0u;j<done.size();j++){
+        //if not in Done add and breake
+            if(done[j] == best.name[i]){
+                GOT_IT = true;
+                break;
+            }
+        }
+        if(!GOT_IT){
+            done.push_back(best.name[i]);
+            ret = ret + best.name[i] +" ";
+        }
+    }
+    ret =ret+"\n";
+
+
+    
+    return ret;
+
+    // return "test\n";
 
 
 
@@ -271,17 +294,18 @@ std::string  solve_parallel (Node const& input )
 
     // return solve(best);
 
-    // std::string ret;   // save return value
-    // std::cout<<"\n";
-    // for(auto i=0u;i<best.name.size();i++){
+    std::string ret;   // save return value
+    std::cout<<"\n";
+    for(auto i=0u;i<best.name.size();i++){
     
-    //     // ret = ret + best.name[i] +" ";
-    //     std::cout<<best.name[i] + " "  <<best.xy[i].x <<" " << best.xy[i].y << "\n";
+        ret = ret + best.name[i] +" ";
+        // std::cout<<best.name[i] + " "  <<best.xy[i].x <<" " << best.xy[i].y << "\n";
 
-    // }
-    // // ret =ret+"\n";
+    }
+    ret =ret+"\n";
+    return ret;
 
-    return "test\n";
+    // return "test\n";
 
 
 

@@ -106,8 +106,8 @@ struct skyline_vec
 		Node nn;
 		for( auto i = 0u; i < n; ++i )
 		{
-			auto const x = ( std::rand() % 500 & ~1u );
-			auto const y = ( std::rand() % 500 & ~1u );
+			auto const x = ( std::rand()  & ~1u );
+			auto const y = ( std::rand()  & ~1u );
 			std::string name = random_string(4);//giving it a random length of 4
 
 

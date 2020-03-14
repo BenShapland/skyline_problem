@@ -29,10 +29,35 @@ SoA-hot_and_cold_data_split
     original_node.cpp
 
 
-Usage:
+Parallel
+    Solution
+        Node.h
+        solution.hpp
+        bechmarking.cpp 
+        timing.hpp
+        original_node.cpp
+
+
+    Test
+        Test code for building parallize solution
+        
+
+
+
+Benchmark Single Thread:
 ```
     cd AoS OR
     cd hot_and_cold_data_split 
-    g++ -Wall -Og -std=c++17 benchmarking.cpp -o bench 
+    g++ -Wall -O3 -std=c++17 benchmarking.cpp -o bench 
     ./bench
+
+```
+
+
+Benchmark Multi Thread :
+```
+    cd Parallel/Solution/
+    g++ -Wall -O3 -std=c++17 -mavx -march=native -fopenmp benchmarking.cpp -o bench
+    ./bench
+
 ```

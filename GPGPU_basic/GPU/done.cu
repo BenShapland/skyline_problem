@@ -47,9 +47,9 @@ std::vector<std::string> make_names(int number_of_names){
 
 
 __global__ 
-void solv(int n, XY *input, int *output)
+void solv(int n, std::vector <XY> *input, int *output)
 {
-//   output[0] = 69;
+  output[0] = 69;
 }
 
 
@@ -72,14 +72,14 @@ int main()
    std::cout<< "N: " <<N << "\n";//10
 
    // allocate memmory
-   XY *de_input;
-   cudaMalloc(&de_input, N*sizeof(XY));
+   std::vector < XY > *de_input;
+   cudaMalloc((void **) &de_input, N*sizeof(XY));
 
    int *de_counter;
-   cudaMalloc(&de_counter, N*sizeof(int));
+   cudaMalloc((void **) &de_counter, N*sizeof(int));
 
    //stop
-   cudaMemcpy( de_input, test_data.xy, sizeof(test_data.xy), cudaMemcpyHostToDevice );
+   cudaMemcpy( de_input, &test_data.xy, sizeof(test_data.xy), cudaMemcpyHostToDevice );
 
 
    //block, threads
@@ -92,6 +92,7 @@ int main()
 
 
    int result[ N ];
+   result[0] = 99;
 
    // Once the kernel has completed, we initiate a transfer of the result data *back to the CPU*.
    // Note that the `cudaMemcpyDeviceToHost` constant denotes transferring data *from the GPU*.

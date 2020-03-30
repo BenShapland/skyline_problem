@@ -7,14 +7,26 @@ class XY{
         int y;
 
 
+    XY(){
+    }
+
 
     XY(int a ,int b){
         x = a;
         y = b;
     }
 
+    // bool dominates(XY other){
+    //     if( ((x < other.x)&&(y <= other.y))
+    //      || ((x <= other.x)&&(y < other.y))){
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
 };
+// a.dom(b)
+
 
 
 class Node

@@ -9,15 +9,16 @@
  */
  #include <iostream>
  #include <vector>
+ #include <chrono>     // timing library
+#include <numeric>    // std::accumulate()
  
 //  #include "Node.h"
-//  #include "test-data.hpp"
+ #include "test-data.hpp"
  
  
  #include <random> 	// std::rand, std::srand, std::default_random_engine
  std::string random_string(std::size_t length)
  {
- 
      const std::string characters = "abcdefghijklmnopqrstuvwxyz";
  
      std::random_device random_device;
@@ -35,7 +36,6 @@
  }
  
  
- 
  std::vector<std::string> make_names(int number_of_names){
     std::vector<std::string> hold;
     for(int i =0; i<number_of_names; i++){
@@ -44,48 +44,66 @@
     return hold;
  }
  
- 
- 
- __global__ 
- void solv(int n, int *input, int *output)
- {
-   output[0] = 69;
+
+ __host__ __device__
+ bool dom(XY a, XY b){
+    if( ((a.x < b.x)&&(a.y <= b.y)) || ((a.x <= b.x)&&(a.y < b.y))){
+        return true;
+    }
+    return false;
  }
  
- 
+ __global__ 
+ void solv(int n, XY *input, int *output)
+ {
+ // Printing input
+    int index = threadIdx.x;
+    printf("Input %d, thread %d\n", input[index].x, threadIdx.x);  
+    for(int i=0; i<n ; i++){
+       // if add input[index] doms input[i]
+       if( dom(input[index],input[i] ) ){
+          output[i] = 80085; // test
+          
+         //  printf("Input %d, thread %d\n", input[index].x, threadIdx.x);  
+       }    
+    }
+ }
  
  
  int main()
  {
+
+   auto const start_time = std::chrono::system_clock::now();
     //  make test data NODE
 
+   //  XY * data_pointer = data;
 
-    int test_data[10] = { 1 , 2, 3, 4, 5, 6, 7, 8, 9 ,10};
-    
+
+   int N = sizeof(data_array)/ sizeof(XY);
+
+   std::cout<<"size N: "<<N<<"\n";
+
+
  
-    std::vector <std::string> name = make_names(10);
-     
-    //test
-    std::cout<< (test_data[0]) <<"\n";std::cout<< (test_data[0]) <<"\n";std::cout<< (name[0]) << "\n";
- 
- 
-    int N = (10);
- 
-    std::cout<< "N: " <<N << "\n";//10
- 
-    // allocate memmory
-    int *de_input;
-    cudaMalloc((void **) &de_input, N*sizeof(int));
+    XY *de_input;
+    cudaMalloc((void **) &de_input, N*sizeof(XY));
  
     int *de_counter;
     cudaMalloc((void **) &de_counter, N*sizeof(int));
- 
-    //stop
-    cudaMemcpy( de_input, test_data, sizeof(test_data), cudaMemcpyHostToDevice );
+
+    cudaMemcpy( de_input, &data_array, sizeof(XY)*N, cudaMemcpyHostToDevice );
+    
+    // std::cout<<"size of(xy)" << sizeof(de_input);
+    
+    int result[ N ];
+    for (int i =0;i<N;i++){
+       result[i] = 0;
+    }
+    cudaMemcpy( de_counter, &result, sizeof(result), cudaMemcpyHostToDevice );
  
  
     //block, threads
-    solv<<<1, 1>>>(N, de_input, de_counter);
+    solv<<<1, N>>>(N, de_input, de_counter);
     //block X threads = N
  
  
@@ -93,21 +111,36 @@
     cudaDeviceSynchronize();
  
  
-    int result[ N ];
-    result[0] = 99;
+    // int result[ N ];
+    // for (int i =0;i<N;i++){
+    //    result[i] = 999;
+    // }
+ 
     // Once the kernel has completed, we initiate a transfer of the result data *back to the CPU*.
     // Note that the `cudaMemcpyDeviceToHost` constant denotes transferring data *from the GPU*.
-    cudaMemcpy( result, de_counter, sizeof(de_counter), cudaMemcpyDeviceToHost );
+    cudaMemcpy( result, de_counter, N*sizeof(int), cudaMemcpyDeviceToHost );
  
- 
- 
- 
-    std::cout<< "RESULTS: "<< (result[0])<< "\n";
+
+    // Generate Final Result
+   // Node final_result;
+   for (int i =0;i<N;i++){
+      // std::cout<< i<<" " <<(result[i])<< "\n";
+      if (result[i] == 0){
+         // final_result.add(XY_array.x,XY_array.y,name[i]);
+         std::cout<<"x: " << data_array[i].x <<" y: "<<data_array[i].y<<"\n";
+      }
+
+   }
+      
+    //goal 0 , 1, 4, 7, 14
  
  
     // Free memory
     cudaFree(de_input);
     cudaFree(de_counter);
- 
+
+    auto const end_time = std::chrono::system_clock::now();
+    auto const elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>( end_time - start_time );
+    std::cout << "time: " << ( elapsed_time.count() ) << " us" << std::endl;
     return 0; 
  }

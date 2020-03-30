@@ -15,44 +15,41 @@
 
 
 #include <random> 	// std::rand, std::srand, std::default_random_engine
-std::string random_string(std::size_t length)
-{
-
-    const std::string characters = "abcdefghijklmnopqrstuvwxyz";
-
-    std::random_device random_device;
-    std::mt19937 generator(random_device());
-    std::uniform_int_distribution<> distribution(0, characters.size() - 1);
-
-    std::string random_string;
-
-    for (std::size_t i = 0; i < length; ++i)
-    {
-        random_string += characters[distribution(generator)];
-    }
-
-    return random_string;
-}
+ 
 
 
 
-std::vector<std::string> make_names(int number_of_names){
-   std::vector<std::string> hold;
-   for(int i =0; i<number_of_names; i++){
-      hold.push_back(random_string(4));
+__host__ __device__
+bool dom(XY a, XY b){
+   if( ((a.x < b.x)&&(a.y <= b.y)) || ((a.x <= b.x)&&(a.y < b.y))){
+       return true;
    }
-   return hold;
+   return false;
 }
-
-
 
 __global__ 
-void solv(int n, std::vector <XY> *input, int *output)
+void solv(int n, XY *input, int *output)
 {
-  output[0] = 69;
+// Printing input
+   int index = threadIdx.x;
+   printf("Input %d, thread %d\n", input[index].x, threadIdx.x); 
+
+
+
+
+   // int index = threadIdx.x;
+   // for(int i=0; i<n ; i++){
+   //    // if add input[index] doms input[i]
+   //    if( dom(input[index],input[i] ) ){
+   //       output[i] = 80085; // test
+         
+   //       printf("Input %d, thread %d\n", input[index].x, threadIdx.x);  
+   //    }
+      
+   
+   // }
+   
 }
-
-
 
 
 int main()
@@ -60,9 +57,12 @@ int main()
    //  make test data NODE
    Node test_data;
    test_data.xy = data;
-
+   XY * data_pointer = data;
    test_data.name = make_names(10);
     
+   int test_array[10] = {0,1,2,3,4,5,6,7,8,9};
+
+
    //test
    std::cout<< (test_data.xy[0].x) <<"\n";std::cout<< (test_data.xy[0].y) <<"\n";std::cout<< (test_data.name[0]) << "\n";
 
@@ -72,18 +72,35 @@ int main()
    std::cout<< "N: " <<N << "\n";//10
 
    // allocate memmory
-   std::vector < XY > *de_input;
+   // std::vector < XY > *de_input;
+   XY *de_input;
+
+
    cudaMalloc((void **) &de_input, N*sizeof(XY));
 
    int *de_counter;
    cudaMalloc((void **) &de_counter, N*sizeof(int));
 
+
+   cudaMalloc((void **) &de_input, N*sizeof(XY));
+
+
+
+
    //stop
-   cudaMemcpy( de_input, &test_data.xy, sizeof(test_data.xy), cudaMemcpyHostToDevice );
+   cudaMemcpy( de_input, &data_pointer, sizeof(XY)*N, cudaMemcpyHostToDevice );
+   
+   // std::cout<<"size of(xy)" << sizeof(de_input);
+   
+   int result[ N ];
+   for (int i =0;i<N;i++){
+      result[i] = 999;
+   }
+   cudaMemcpy( de_counter, &result, sizeof(result), cudaMemcpyHostToDevice );
 
 
    //block, threads
-   solv<<<1, 1>>>(N, de_input, de_counter);
+   solv<<<1, N>>>(N, de_input, de_counter);
    //block X threads = N
 
 
@@ -91,18 +108,28 @@ int main()
    cudaDeviceSynchronize();
 
 
-   int result[ N ];
-   result[0] = 99;
+   // int result[ N ];
+   // for (int i =0;i<N;i++){
+   //    result[i] = 999;
+   // }
 
    // Once the kernel has completed, we initiate a transfer of the result data *back to the CPU*.
    // Note that the `cudaMemcpyDeviceToHost` constant denotes transferring data *from the GPU*.
-   cudaMemcpy( result, de_counter, sizeof(de_counter), cudaMemcpyDeviceToHost );
+   cudaMemcpy( result, de_counter, N*sizeof(int), cudaMemcpyDeviceToHost );
 
 
+   for (int i =0;i<N;i++){
+      std::cout<< i<<" " <<(result[i])<< "\n";
+   }
+   
+   //goal 0 , 1, 4, 7, 14
 
 
-   std::cout<< "RESULTS: "<< (result[0])<< "\n";
-
+   // std::cout<< "0: "<< (result[0])<< "\n";
+   // std::cout<< "1: "<< (result[1])<< "\n";
+   // std::cout<< "2: "<< (result[2])<< "\n";
+   // std::cout<< "3: "<< (result[3])<< "\n";
+   // std::cout<< "4: "<< (result[4])<< "\n";
 
    // Free memory
    cudaFree(de_input);

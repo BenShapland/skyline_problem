@@ -48,7 +48,7 @@
  __host__ __device__
  bool dom(XY a, XY b){
     if( ((a.x < b.x)&&(a.y <= b.y)) || ((a.x <= b.x)&&(a.y < b.y))){
-        return true;
+        return true; 
     }
     return false;
  }
@@ -58,7 +58,7 @@
  {
  // Printing input
     int index = threadIdx.x;
-    printf("Input %d, thread %d\n", input[index].x, threadIdx.x);  
+   //  printf("Input %d, thread %d\n", input[index].x, threadIdx.x);  
     for(int i=0; i<n ; i++){
        // if add input[index] doms input[i]
        if( dom(input[index],input[i] ) ){
@@ -74,14 +74,11 @@
  {
 
    auto const start_time = std::chrono::system_clock::now();
-    //  make test data NODE
-
-   //  XY * data_pointer = data;
 
 
    int N = sizeof(data_array)/ sizeof(XY);
 
-   std::cout<<"size N: "<<N<<"\n";
+   // std::cout<<"size N: "<<N<<"\n";
 
 
  

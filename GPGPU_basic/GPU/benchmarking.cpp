@@ -14,7 +14,7 @@ using std::vector;
 
 // #include "xvals.hpp"
 // #include "yvals.hpp"
-#include "test-data.hpp"
+// #include "test-data.hpp"
 std::string random_string(std::size_t length)
 {
     const std::string characters = "abcdefghijklmnopqrstuvwxyz";
@@ -43,7 +43,7 @@ std::vector<std::string> make_names(int number_of_names){
    return hold;
 }
 
-void write_vector_XY_file( const char * filename, std::vector< uint32_t > x , std::vector< uint32_t > y, std::string name)
+void write_vector_XY_file( const char * filename, std::vector< uint32_t > x , std::vector< uint32_t > y, std::string name, std::vector< std::string > ran_name)
 {
 	int n = x.size();
     std::ofstream file;
@@ -70,8 +70,15 @@ void write_vector_XY_file( const char * filename, std::vector< uint32_t > x , st
     file << " };";
     
 
+    
+    file << "\n\n\n";
     // std::vector< std::string > name = { "ass", "NIPS"};
-
+    file << "std::vector<  std::string > "<< name <<"_name"<<" = {";
+    for(int i = 0 ; i <x.size()-1;i++){
+        file << '"' << ran_name[i] <<'"' << ",";
+    }
+    file << '"' << ran_name[x.size()-1] <<'"' ;
+    file << " };";
 
 
 
@@ -88,17 +95,16 @@ int main()
 	// std::cout<< (yvals[1].x) <<"\n";
 
 	//
-	int n=50000;//number of random data entrys 
+	int n=10;//number of random data entrys 
 	std::vector< uint32_t > x( n );
     std::generate( std::begin( x ), std::end( x ), [](){ return rand() % 1000; } );
 	std::vector< uint32_t > y( n );
     std::generate( std::begin( y ), std::end( y ), [](){ return rand() % 1000; } );
 
     //random generate strings
-    std::vector< std::string > name = make_names(n);
+    std::vector< std::string > names = make_names(n);
     
-	
-	write_vector_XY_file("test-data.hpp", x,y, "data" );
+	write_vector_XY_file("test-data.hpp", x,y, "data", names);
 
 
     // std::cout << data_array[0].x;

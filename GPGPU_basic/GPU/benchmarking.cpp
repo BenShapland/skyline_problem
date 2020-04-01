@@ -95,7 +95,7 @@ int main()
 	// std::cout<< (yvals[1].x) <<"\n";
 
 	//
-	int n=10;//number of random data entrys 
+	int n=10000;//number of random data entrys 
 	std::vector< uint32_t > x( n );
     std::generate( std::begin( x ), std::end( x ), [](){ return rand() % 1000; } );
 	std::vector< uint32_t > y( n );

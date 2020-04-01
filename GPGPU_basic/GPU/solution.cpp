@@ -1,16 +1,20 @@
-#ifndef CS586_UNIQUE
-#define CS586_UNIQUE
+// #ifndef CS586_UNIQUE
+// #define CS586_UNIQUE
 
 #include <cassert>		 // assert()
 #include <unordered_map>
 #include <iostream> 
 #include <omp.h>    // for multi-core parallelism
+#include <chrono> 
 
 // #include "point-data.hpp"
 
 
-namespace skyline {
-namespace solution {
+#include <vector>
+#include "test-data.hpp"
+
+// // namespace skyline {
+// // namespace solution {
 using std::vector;
 
 
@@ -204,9 +208,33 @@ std::string  solve_parallel (Node const& input )
 
 
 
-} 
-}
-#endif 
+// } 
+// }
+// #endif 
 
+
+int main(){
+
+    Node the_data;
+    the_data.xy = data;
+    the_data.name = data_name;
+    
+
+
+   // start timer 
+   auto const start_time = std::chrono::system_clock::now();
+
+
+    std::string ans = solve(the_data);
+
+
+    // End timer 
+    auto const end_time = std::chrono::system_clock::now();
+    auto const elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>( end_time - start_time );
+    std::cout << "time: " << ( elapsed_time.count() ) << " us" << std::endl;
+    
+
+    return 0;
+}
 
 

@@ -73,29 +73,30 @@
  int main()
  {
 
-   auto const start_time = std::chrono::system_clock::now();
 
 
    int N = sizeof(data_array)/ sizeof(XY);
 
    // std::cout<<"size N: "<<N<<"\n";
-
-
  
     XY *de_input;
     cudaMalloc((void **) &de_input, N*sizeof(XY));
- 
+
+
     int *de_counter;
     cudaMalloc((void **) &de_counter, N*sizeof(int));
+
+   auto const start_time = std::chrono::system_clock::now();
+
 
     cudaMemcpy( de_input, &data_array, sizeof(XY)*N, cudaMemcpyHostToDevice );
     
     // std::cout<<"size of(xy)" << sizeof(de_input);
     
     int result[ N ];
-    for (int i =0;i<N;i++){
-       result[i] = 0;
-    }
+   //  for (int i =0;i<N;i++){
+   //     result[i] = 0;
+   //  }
     cudaMemcpy( de_counter, &result, sizeof(result), cudaMemcpyHostToDevice );
  
  
@@ -119,7 +120,7 @@
  
 
     // Generate Final Result
-   // Node final_result;
+   Node final_result;
    for (int i =0;i<N;i++){
       // std::cout<< i<<" " <<(result[i])<< "\n";
       if (result[i] == 0){
@@ -130,7 +131,7 @@
    }
       
     //goal 0 , 1, 4, 7, 14
- 
+      
  
     // Free memory
     cudaFree(de_input);

@@ -64,3 +64,9 @@ Benchmark Multi Thread :
     ./bench
 
 ```
+
+compiling and runing with the GPU
+```
+    nvcc -O3 test.cu
+    nvprof ./test
+```

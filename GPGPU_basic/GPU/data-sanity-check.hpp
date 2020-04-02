@@ -1,4 +1,5 @@
-// #include "Node.h"
+#include "Node.h"
 // #include <vector>
-std::vector< XY > data = {{1, 12}, {2, 7}, {4, 22}, {5, 14}, {6, 5}, {8, 19}, {9, 9}, {10, 4}, {12, 23}, {15, 15}, {15,22}, {16,6}, {17,10}, {17,20}, {21,3}, {22,14}};
+XY data_array[16] = {XY{1, 12}, XY{2, 7}, XY{4, 22}, XY{5, 14}, XY{6, 5}, XY{8, 19}, XY{9, 9}, XY{10, 4}, XY{12, 23}, XY{15, 15}, XY{15,22}, XY{16,6}, XY{17,10}, XY{17,20}, XY{21,3}, XY{22,14}};
 
+char char_data[]= "aaaabbbbccccddddeeeeffffgggghhhhiiiijjjjkkkkllllmmmmnnnnoooopppp";

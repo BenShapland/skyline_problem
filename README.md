@@ -69,4 +69,6 @@ compiling and runing with the GPU
 ```
     nvcc -O3 test.cu
     nvprof ./test
+    
+    maybe cuda-memcheck
 ```

@@ -68,6 +68,16 @@
        }    
     }
  }
+ __global__ 
+ void name_maker(int n, std::string *input, int *output){
+   int index = threadIdx.x;
+   printf("Output %d, thread %d\n", output[index], threadIdx.x);  
+   if(output[index] == 0){
+    printf("Input %d, thread %d\n", input[index], threadIdx.x);  
+      // printf("%s",input[index]);
+   }
+
+ }
  
  
  int main()
@@ -75,8 +85,12 @@
 
 
    int N = sizeof(data_array)/ sizeof(XY);
-
    // std::cout<<"size N: "<<N<<"\n";
+
+   // TEST
+   std::string *de_names;
+   cudaMalloc((void **) &de_names, N*sizeof(std::string));
+
  
     XY *de_input;
     cudaMalloc((void **) &de_input, N*sizeof(XY));
@@ -94,18 +108,25 @@
     
     int result[ N ];
 
-    cudaMemcpy( de_counter, &result, sizeof(result), cudaMemcpyHostToDevice );
+    cudaMemcpy( de_counter, &result, sizeof(result), cudaMemcpyHostToDevice );//!!!!!!!!!!!!!!!!!!!!!!!!!??? are we copying an empty array 
  
+    //TEST
+    cudaMemcpy( de_names, &data_name, N*sizeof(std::string), cudaMemcpyHostToDevice );
+
+    
  
     //block, threads
     solv<<<1, N>>>(N, de_input, de_counter);
     //block X threads = N
- 
- 
+
     // Wait for GPU to finish before accessing on host
     cudaDeviceSynchronize();
  
- 
+
+    //TEST
+    name_maker<<<1, N>>>(N, de_names, de_counter);
+
+
     // Once the kernel has completed, we initiate a transfer of the result data *back to the CPU*.
     // Note that the `cudaMemcpyDeviceToHost` constant denotes transferring data *from the GPU*.
     cudaMemcpy( result, de_counter, N*sizeof(int), cudaMemcpyDeviceToHost );
@@ -115,17 +136,21 @@
     auto const elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>( end_time - start_time );
     std::cout << "time: " << ( elapsed_time.count() ) << " us" << std::endl;
     
-    // Generate Final Result
-    for (int i =0;i<N;i++){
-       if (result[i] == 0){
-          std::cout<< data_name[i]<<"\n";
-         }
+   //  Generate Final Result
+   std::cout<<"____________________________________________________-";
+   //  for (int i =0;i<N;i++){
+   //     if (result[i] == 0){
+   //        std::cout<< data_name[i]<<"\n";
+   //       }
          
-      }
+   //    }
 
       // Free memory
       cudaFree(de_input);
       cudaFree(de_counter);
+
+      //TEST
+      cudaFree(de_names);
       
     return 0; 
  }

@@ -72,14 +72,22 @@ void write_vector_XY_file( const char * filename, std::vector< uint32_t > x , st
 
     
     file << "\n\n\n";
+    // // std::vector< std::string > name = { "ass", "NIPS"};
+    // file << "std::vector<  std::string > "<< name <<"_name"<<" = {";
+    // for(int i = 0 ; i <x.size()-1;i++){
+    //     file << '"' << ran_name[i] <<'"' << ",";
+    // }
+    // file << '"' << ran_name[x.size()-1] <<'"' ;
+    // file << " };";
+
+
     // std::vector< std::string > name = { "ass", "NIPS"};
-    file << "std::vector<  std::string > "<< name <<"_name"<<" = {";
+    file << "std::string "<< name <<"_name"<< "["<<n<<"]" <<" = {";
     for(int i = 0 ; i <x.size()-1;i++){
         file << '"' << ran_name[i] <<'"' << ",";
     }
     file << '"' << ran_name[x.size()-1] <<'"' ;
     file << " };";
-
 
 
 
@@ -95,7 +103,7 @@ int main()
 	// std::cout<< (yvals[1].x) <<"\n";
 
 	//
-	int n=10000;//number of random data entrys 
+	int n=5;//number of random data entrys 
 	std::vector< uint32_t > x( n );
     std::generate( std::begin( x ), std::end( x ), [](){ return rand() % 1000; } );
 	std::vector< uint32_t > y( n );

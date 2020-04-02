@@ -74,7 +74,6 @@
  {
 
 
-
    int N = sizeof(data_array)/ sizeof(XY);
 
    // std::cout<<"size N: "<<N<<"\n";
@@ -86,7 +85,7 @@
     int *de_counter;
     cudaMalloc((void **) &de_counter, N*sizeof(int));
 
-   auto const start_time = std::chrono::system_clock::now();
+    auto const start_time = std::chrono::system_clock::now();
 
 
     cudaMemcpy( de_input, &data_array, sizeof(XY)*N, cudaMemcpyHostToDevice );
@@ -94,9 +93,7 @@
     // std::cout<<"size of(xy)" << sizeof(de_input);
     
     int result[ N ];
-   //  for (int i =0;i<N;i++){
-   //     result[i] = 0;
-   //  }
+
     cudaMemcpy( de_counter, &result, sizeof(result), cudaMemcpyHostToDevice );
  
  
@@ -109,36 +106,26 @@
     cudaDeviceSynchronize();
  
  
-    // int result[ N ];
-    // for (int i =0;i<N;i++){
-    //    result[i] = 999;
-    // }
- 
     // Once the kernel has completed, we initiate a transfer of the result data *back to the CPU*.
     // Note that the `cudaMemcpyDeviceToHost` constant denotes transferring data *from the GPU*.
     cudaMemcpy( result, de_counter, N*sizeof(int), cudaMemcpyDeviceToHost );
- 
-
-    // Generate Final Result
-   Node final_result;
-   for (int i =0;i<N;i++){
-      // std::cout<< i<<" " <<(result[i])<< "\n";
-      if (result[i] == 0){
-         // final_result.add(XY_array.x,XY_array.y,name[i]);
-         std::cout<<"x: " << data_array[i].x <<" y: "<<data_array[i].y<<"\n";
-      }
-
-   }
-      
-    //goal 0 , 1, 4, 7, 14
-      
- 
-    // Free memory
-    cudaFree(de_input);
-    cudaFree(de_counter);
-
+    
+    
     auto const end_time = std::chrono::system_clock::now();
     auto const elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>( end_time - start_time );
     std::cout << "time: " << ( elapsed_time.count() ) << " us" << std::endl;
+    
+    // Generate Final Result
+    for (int i =0;i<N;i++){
+       if (result[i] == 0){
+          std::cout<< data_name[i]<<"\n";
+         }
+         
+      }
+
+      // Free memory
+      cudaFree(de_input);
+      cudaFree(de_counter);
+      
     return 0; 
  }

@@ -14,7 +14,7 @@ BAD copy:
 https://docs.google.com/document/d/1YMiDLCQd3QnpE150zXRuKwICiOqGe3Sxm3DOrDqNndQ/edit?usp=sharing
 
 
-AoS
+### AoS
 
     Node.h
     solution.hpp
@@ -23,7 +23,7 @@ AoS
     original_node.cpp
   
 
-SoA-hot_and_cold_data_split
+### SoA-hot_and_cold_data_split
 
     Node.h
     solution.hpp
@@ -32,7 +32,7 @@ SoA-hot_and_cold_data_split
     original_node.cpp
 
 
-Parallel
+### Parallel
     Solution
         Node.h
         solution.hpp
@@ -45,7 +45,7 @@ Parallel
         Test code for building parallize solution
         
 
-GPGPU_basic
+### GPGPU_basic
     GPU
         data_generator.cpp
         Node.h
@@ -58,39 +58,36 @@ GPGPU_basic
         Test code for GPU parallelization single block
 
 
-Benchmarking:
+#### Benchmarking:
 ```
-    cd GPGPU_basic/GPU
+cd GPGPU_basic/GPU
 ```
-Generate test data in test-data.hpp
+#### Generate test data
 ```
-     g++ data_generator.cpp -o data
-     ./data <num_of_nodes>
+g++ data_generator.cpp -o data
+./data <num_of_nodes>
  ```
-
- Benchmark CPU version
+#### Benchmark CPU version
  ```
-    g++ -Wall -O3 -std=c++17 -mavx -march=native -fopenmp solution_cpu.cpp -o sol_cpu
-    ./sol_cpu
+g++ -Wall -O3 -std=c++17 -mavx -march=native -fopenmp solution_cpu.cpp -o sol_cpu
+./sol_cpu
  ```
-
-Benchmark GPU version
+#### Benchmark GPU version
  ```
-    nvcc -O3 -o sol_gpu solution_gpu.cu
-    ./sol_gpu
+nvcc -O3 -o sol_gpu solution_gpu.cu
+./sol_gpu
  ```
-
 
 ## Note
 
-*solution_gpu.cu* needs to be configured before.
+**solution_gpu.cu** needs to be configured before compiling
  ```
-#define N 5048 //  num_blocks *num_thread_per_block 
+#define N 5048 //  num_blocks * num_thread_per_block 
 #define num_blocks  5
 #define num_thread_per_block  1024  
  ```
-*num_blocks* is the number of nodes being used -> Number of nodes genrated by data_generator.cpp
-*num_blocks* number blocks for GPU
-*num_thread_per_block* number of threads per block
+**num_blocks** is the number of nodes being used -> Number of nodes genrated by data_generator.cpp
+**num_blocks** number blocks for GPU
+**num_thread_per_block** number of threads per block
 
-*num_blocks* * *num_thread_per_block*  must be equal to N
+**num_blocks** * **num_thread_per_block**  must be equal to N

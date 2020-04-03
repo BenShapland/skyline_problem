@@ -58,11 +58,12 @@ https://docs.google.com/document/d/1YMiDLCQd3QnpE150zXRuKwICiOqGe3Sxm3DOrDqNndQ/
         Test code for GPU parallelization single block
 
 
-#### Benchmarking:
+#### Running Code:
 ```
 cd GPGPU_basic/GPU
 ```
 #### Generate test data
+This script will generate test data to the file test-data.hpp.
 ```
 g++ data_generator.cpp -o data
 ./data <num_of_nodes>
@@ -80,14 +81,18 @@ nvcc -O3 -o sol_gpu solution_gpu.cu
 
 ## Note
 
-**solution_gpu.cu** needs to be configured before compiling
- ```
-#define N 5048 //  num_blocks * num_thread_per_block 
-#define num_blocks  5
-#define num_thread_per_block  1024  
- ```
-**num_blocks** is the number of nodes being used -> Number of nodes genrated by data_generator.cpp
-**num_blocks** number blocks for GPU
-**num_thread_per_block** number of threads per block
+**1)**
+    **solution_gpu.cu** needs to be configured before compiling
+    ```
+    #define N 5048 //  num_blocks * num_thread_per_block 
+    #define num_blocks  5
+    #define num_thread_per_block  1024  
+    ```
+    **num_blocks** is the number of nodes being used -> Number of nodes genrated by data_generator.cpp
+    **num_blocks** number blocks for GPU
+    **num_thread_per_block** number of threads per block
 
-**num_blocks** * **num_thread_per_block**  must be equal to N
+    **num_blocks** * **num_thread_per_block**  must be equal to N
+
+**2)** 
+    All three model are running the same test data from the file test-data.hpp.   

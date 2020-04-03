@@ -92,7 +92,7 @@ nvcc -O3 -o sol_gpu solution_gpu.cu
     **num_blocks** number blocks for GPU
     **num_thread_per_block** number of threads per block
 
-    **num_blocks** * **num_thread_per_block**  must be equal to N
+    num_blocks * um_thread_per_block  must be equal to N
 
 **2)** 
     All three model are running the same test data from the file test-data.hpp.   

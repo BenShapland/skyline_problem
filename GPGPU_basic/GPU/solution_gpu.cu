@@ -18,9 +18,9 @@
 // #include "data-sanity-check.hpp"
 #include "test-data.hpp"
 
-#define N 5048 // num_blocks * num_thread_per_block 
-#define num_blocks  5
-#define num_thread_per_block  1024 //2048
+#define N 7000 // num_blocks * num_thread_per_block 
+#define num_blocks  7
+#define num_thread_per_block  1000 //2048
 
 
 __constant__  XY de_data_array[N];
@@ -41,8 +41,8 @@ void name_maker(const char *input, int *output){
  
    if(output[index] != 80085){
       int R_INDEX = threadIdx.x*4 + (blockIdx.x* num_thread_per_block *4);
-      printf("name %c%c%c%c INDEX %d BLOCK ID %d\n"
-      ,input[R_INDEX],input[R_INDEX+1],input[R_INDEX+2],input[R_INDEX+3], index, blockIdx.x);
+      printf("%c%c%c%c\n"
+      ,input[R_INDEX],input[R_INDEX+1],input[R_INDEX+2],input[R_INDEX+3]);
    }
 
 }

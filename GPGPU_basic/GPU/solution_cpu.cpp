@@ -7,14 +7,9 @@
 #include <omp.h>    // for multi-core parallelism
 #include <chrono> 
 
-// #include "point-data.hpp"
-
-
 #include <vector>
 #include "test-data.hpp"
 
-// // namespace skyline {
-// // namespace solution {
 using std::vector;
 
 
@@ -81,6 +76,7 @@ std::string  solve (Node const& input )
             XY xy_node( input.xy[i].x,input.xy[i].y);
             best.xy.push_back(xy_node) ;
             best.name.push_back(input.name[i]); 
+            // std::cout<<"INDEX: "<<i<<input.name[i]<<"\n";
         }
 
     }
@@ -208,11 +204,6 @@ std::string  solve_parallel (Node const& input )
 
 
 
-// } 
-// }
-// #endif 
-
-
 int main(){
 
     Node the_data;
@@ -226,12 +217,28 @@ int main(){
 
 
     std::string ans = solve(the_data);
-
+    std::cout<<ans;
 
     // End timer 
     auto const end_time = std::chrono::system_clock::now();
     auto const elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>( end_time - start_time );
-    std::cout << "time: " << ( elapsed_time.count() ) << " us" << std::endl;
+    std::cout << "time CPU: " << ( elapsed_time.count() ) << " us" << std::endl;
+
+
+
+   // start timer 
+   auto const start_time_parallel = std::chrono::system_clock::now();
+
+
+    std::string ans_parallel = solve_parallel(the_data);
+    std::cout<<ans_parallel;
+
+    // End timer 
+    auto const end_time_parallel = std::chrono::system_clock::now();
+    auto const elapsed_time_parallel = std::chrono::duration_cast<std::chrono::microseconds>( end_time_parallel - start_time_parallel );
+    std::cout << "time CPU Parallel: " << ( elapsed_time_parallel.count() ) << " us" << std::endl;
+    
+    
     
 
     return 0;

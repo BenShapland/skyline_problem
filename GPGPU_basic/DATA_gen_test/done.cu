@@ -12,9 +12,9 @@
 #include <chrono>     // timing library
 #include <numeric>    // std::accumulate()
 
-//  #include "Node.h"
-// #include "test-data.hpp"
-#include "data-sanity-check.hpp"
+#include "test-data.hpp"
+// #include "data-sanity-check.hpp"
+
 
 
 
@@ -26,11 +26,13 @@ bool dom(XY a, XY b){
    return false;
 }
 
+
 __global__ 
 void solv(int n, XY *input, int *output)
 {
 // Printing input
-   int index = threadIdx.x;
+   // int index = threadIdx.x + blockIdx.x*(1024) ;
+   int index = threadIdx.x + blockIdx.x ;
    //  printf("Input %d, thread %d\n", input[index].x, threadIdx.x);  
    for(int i=0; i<n ; i++){
       // if add input[index] doms input[i]
@@ -43,22 +45,24 @@ void solv(int n, XY *input, int *output)
 }
 __global__ 
 void name_maker(const char *input, int *output){
-   int index = threadIdx.x*4;
-   printf("In GPU section\n");
-   
-   if(output[threadIdx.x] == 0){
-      printf("out==0\n");
-      printf("name %c%c%c%c \n",input[index],input[index+1],input[index+2],input[index+3]);
-   }
+   // int index = threadIdx.x + blockIdx.x*(1024);
+   int index = threadIdx.x + blockIdx.x;
 
+   // printf("In GPU section\n");
+   
+   // if(output[threadIdx.x + blockIdx.x*(1024)] == 0){
+   if(output[index] == 0){
+      int R_INDEX = threadIdx.x*4 + blockIdx.x;
+      // printf("out==0\n");
+      printf("name %c%c%c%c INDEX %d BLOCK ID %d\n"
+      ,input[R_INDEX],input[R_INDEX+1],input[R_INDEX+2],input[R_INDEX+3], index, blockIdx.x);
+   }
 
 }
 
 
-
 int main()
 {
-
    int N = sizeof(data_array)/ sizeof(XY);
    // std::cout<<"size N: "<<N<<"\n"; 
 
@@ -90,14 +94,19 @@ int main()
    cudaMemcpy( de_char_names, char_data, (4*N)*sizeof(char), cudaMemcpyHostToDevice );
 
    //block, threads
-   solv<<<1, N>>>(N, de_input, de_counter);
+   //TEST
+   // 1024
+   // solv<<<N, 1>>>(N, de_input, de_counter);
+   solv<<<N, 1>>>(N, de_input, de_counter);
    //block X threads = N
+
+
 
    // Wait for GPU to finish before accessing on host
    cudaDeviceSynchronize();
 
-
-   name_maker<<<1, N>>>(de_char_names, de_counter);
+   //TEST
+   name_maker<<<N, 1>>>(de_char_names, de_counter);
 
 
    cudaDeviceSynchronize();// probably dont need this
@@ -107,10 +116,7 @@ int main()
    // Note that the `cudaMemcpyDeviceToHost` constant denotes transferring data *from the GPU*.
    cudaMemcpy( result, de_counter, N*sizeof(int), cudaMemcpyDeviceToHost );
 
-   for(int i=0;i<N;i++)
-      std::cout<<result[i]<<"\n";
-   
-   
+
    auto const end_time = std::chrono::system_clock::now();
    auto const elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>( end_time - start_time );
    std::cout << "time: " << ( elapsed_time.count() ) << " us" << std::endl;
@@ -127,3 +133,6 @@ int main()
    
    return 0; 
 }
+
+
+

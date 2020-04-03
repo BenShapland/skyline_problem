@@ -45,30 +45,52 @@ Parallel
         Test code for building parallize solution
         
 
+GPGPU_basic
+    GPU
+        data_generator.cpp
+        Node.h
+        data-sanity-check.hpp
+        solution_cpu.cpp
+        solution_gpu.cu
+
+    Test
+        Test code for building parallize solution
+        Test code for GPU parallelization single block
 
 
-Benchmark Single Thread:
+Benchmarking:
 ```
-    cd AoS OR
-    cd hot_and_cold_data_split 
-    g++ -Wall -O3 -std=c++17 benchmarking.cpp -o bench 
-    ./bench
-
+    cd GPGPU_basic/GPU
 ```
+Generate test data in test-data.hpp
+```
+     g++ data_generator.cpp -o data
+     ./data <num_of_nodes>
+ ```
+
+ Benchmark CPU version
+ ```
+    g++ -Wall -O3 -std=c++17 -mavx -march=native -fopenmp solution_cpu.cpp -o sol_cpu
+    ./sol_cpu
+ ```
+
+Benchmark GPU version
+ ```
+    nvcc -O3 -o sol_gpu solution_gpu.cu
+    ./sol_gpu
+ ```
 
 
-Benchmark Multi Thread :
-```
-    cd Parallel/Solution/
-    g++ -Wall -O3 -std=c++17 -mavx -march=native -fopenmp benchmarking.cpp -o bench
-    ./bench
+## Note
 
-```
+*solution_gpu.cu* needs to be configured before.
+ ```
+#define N 5048 //  num_blocks *num_thread_per_block 
+#define num_blocks  5
+#define num_thread_per_block  1024  
+ ```
+*num_blocks* is the number of nodes being used -> Number of nodes genrated by data_generator.cpp
+*num_blocks* number blocks for GPU
+*num_thread_per_block* number of threads per block
 
-compiling and runing with the GPU
-```
-    nvcc -O3 test.cu
-    nvprof ./test
-    
-    maybe cuda-memcheck
-```
+*num_blocks* * *num_thread_per_block*  must be equal to N

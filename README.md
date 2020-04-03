@@ -88,11 +88,11 @@ nvcc -O3 -o sol_gpu solution_gpu.cu
     #define num_blocks  5
     #define num_thread_per_block  1024  
     ```
-    **N** is the number of nodes being used -> Number of nodes genrated by data_generator.cpp
-    **num_blocks** number blocks for GPU
-    **num_thread_per_block** number of threads per block
+    **N** is the number of nodes being used -> Number of nodes genrated by data_generator.cpp.
+    **num_blocks** number blocks for GPU.
+    **num_thread_per_block** number of threads per block.
 
     num_blocks * um_thread_per_block  must be equal to N
 
 **2)** 
-    All three model are running the same test data from the file test-data.hpp.   
+    All three models are running the same test data from the file test-data.hpp.   

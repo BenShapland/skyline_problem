@@ -7,6 +7,9 @@ https://docs.google.com/document/d/18KMW_xI_nk4Zgqg8r5NLPR1Y1j5IeWIYuVQxi610P9s/
 Interm Report 2 - editable from link
 https://docs.google.com/document/d/1zMy0XRLxMfB9fp2gygNS8Z-aWCYBne-WlXbtq5mYruY/edit?usp=sharing
 
+Interm Report 3 -editable from link
+https://docs.google.com/document/d/1vfb0J7DKYIZbsff4Bv4xABI0F8F69pzvHiN-EvvkPpY/edit?usp=sharing
+
 Plan of attack for iterm 3 -GPGPU
 https://docs.google.com/document/d/1NvzulK7GovufvcqnaPSh3plWleHjxywzH7YsHhJpAIg/edit?usp=sharing
 

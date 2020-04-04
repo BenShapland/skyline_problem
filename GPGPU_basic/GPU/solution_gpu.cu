@@ -95,7 +95,6 @@ int main()
    //free
    cudaFree(de_counter);
    cudaFree(de_char_names);
-   cudaFree(de_data_array);
 
    return 0; 
 }

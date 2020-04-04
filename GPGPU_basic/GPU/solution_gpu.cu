@@ -1,12 +1,3 @@
-
-/**
-* Toy example porting a simd algorithm to CUDA for an NVIDIA GPU
-*
-* Calculates the average size of set of 3d vectors.
-* Example input: {{1,1,1},{2,2,2}}
-* I.e., 1 vector of size (3*1^2)^-0.5 and 1 vector of size (3*2^2)^0.5
-* Example output: ( sqrt(3) + sqrt(12) ) / 2 = 2.59808
-*/
 #include <iostream>
 #include <vector>
 #include <chrono>     // timing library
@@ -18,8 +9,8 @@
 // #include "data-sanity-check.hpp"
 #include "test-data.hpp"
 
-#define N 7000 // num_blocks * num_thread_per_block 
-#define num_blocks  7
+#define N 5000 // num_blocks * num_thread_per_block 
+#define num_blocks  5
 #define num_thread_per_block  1000 //2048
 
 

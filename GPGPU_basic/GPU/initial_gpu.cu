@@ -39,8 +39,8 @@ void name_maker(const char *input, int *output){
    if(output[index] == 0){
       int R_INDEX = threadIdx.x*4 + blockIdx.x;
       // printf("out==0\n");
-      printf("name %c%c%c%c INDEX %d BLOCK ID %d\n"
-      ,input[R_INDEX],input[R_INDEX+1],input[R_INDEX+2],input[R_INDEX+3], index, blockIdx.x);
+      printf("%c%c%c%c\n"
+      ,input[R_INDEX],input[R_INDEX+1],input[R_INDEX+2],input[R_INDEX+3]);
    }
 
 }
@@ -61,9 +61,8 @@ int main()
    int *de_counter;
    cudaMalloc((void **) &de_counter, N*sizeof(int));
 
-   auto const start_time = std::chrono::system_clock::now();
-
-
+   
+   
    cudaMemcpy( de_input, &data_array, sizeof(XY)*N, cudaMemcpyHostToDevice );
    
    
@@ -71,12 +70,12 @@ int main()
    for(int i =0; i<N;i++){
       result[i]=0;
    }
-
+   
    cudaMemcpy( de_counter, &result, sizeof(result), cudaMemcpyHostToDevice );
-
+   
    cudaMemcpy( de_char_names, char_data, (4*N)*sizeof(char), cudaMemcpyHostToDevice );
-
-;
+   
+   auto const start_time = std::chrono::system_clock::now();
    solv<<<1, N>>>(N, de_input, de_counter);
    //block X threads = N
 
@@ -87,19 +86,19 @@ int main()
 
    name_maker<<<1, N>>>(de_char_names, de_counter);
 
-
+   
    cudaDeviceSynchronize();// probably dont need this
+
+   auto const end_time = std::chrono::system_clock::now();
+   auto const elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>( end_time - start_time );
+   std::cout << "time: " << ( elapsed_time.count() ) << " us" << std::endl;
+   
 
 
    // Once the kernel has completed, we initiate a transfer of the result data *back to the CPU*.
    // Note that the `cudaMemcpyDeviceToHost` constant denotes transferring data *from the GPU*.
    cudaMemcpy( result, de_counter, N*sizeof(int), cudaMemcpyDeviceToHost );
 
-
-   auto const end_time = std::chrono::system_clock::now();
-   auto const elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>( end_time - start_time );
-   std::cout << "time: " << ( elapsed_time.count() ) << " us" << std::endl;
-   
 
    cudaFree(de_input);
    cudaFree(de_counter);

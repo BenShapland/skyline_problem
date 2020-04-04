@@ -86,9 +86,13 @@ g++ -Wall -O3 -std=c++17 -mavx -march=native -fopenmp solution_cpu.cpp -o sol_cp
     #define num_thread_per_block  1024  
     ```
 **N** is the number of nodes being used. This sould be the number of nodes genrated by data_generator.cpp.
+
 **num_blocks** number blocks for GPU.
+
 **num_thread_per_block** number of threads per block.
+
 **num_blocks * mum_thread_per_block  must be equal to N**
+
 Now compile and run the GPU solution
 ```
 nvcc -O3 -o sol_gpu solution_gpu.cu

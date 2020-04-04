@@ -63,7 +63,8 @@ https://docs.google.com/document/d/1YMiDLCQd3QnpE150zXRuKwICiOqGe3Sxm3DOrDqNndQ/
 cd GPGPU_basic/GPU
 ```
 #### Generate test data
-This script will generate test data to the file test-data.hpp.
+First generate random data points using the data_generator.cpp script. 
+Data_generator.cpp needs to be compiled only once and the size of the dataset can be passed in as a command line argument   
 ```
 g++ data_generator.cpp -o data
 ./data <num_of_nodes>
@@ -92,7 +93,7 @@ nvcc -O3 -o sol_gpu solution_gpu.cu
     **num_blocks** number blocks for GPU.
     **num_thread_per_block** number of threads per block.
 
-    num_blocks * um_thread_per_block  must be equal to N
+    num_blocks * mum_thread_per_block  must be equal to N
 
 **2)** 
     All three models are running the same test data from the file test-data.hpp.   

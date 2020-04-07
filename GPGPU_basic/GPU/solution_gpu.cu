@@ -6,24 +6,38 @@
 #include <cuda_runtime.h>
 #include <cuda.h>
 
-// #include "data-sanity-check.hpp"
-#include "test-data.hpp"
+#include "data-sanity-check.hpp"
+// #include "test-data.hpp"
 
-#define N 1024 // num_blocks * num_thread_per_block 
+#define N 16 // num_blocks * num_thread_per_block 
 #define num_blocks 1
-#define num_thread_per_block  1024 //2048
+#define num_thread_per_block  16 //2048
 
 
 __constant__  XY de_data_array[N];
 
 
 __host__ __device__
-bool dom(XY a, XY b){
+bool dom_old(XY a, XY b){
    if( ((a.x < b.x)&&(a.y <= b.y)) || ((a.x <= b.x)&&(a.y < b.y))){
       return true; 
    }
    return false;
 }
+
+
+
+//dom returns True if a dominates b else false
+__host__ __device__
+bool dom(XY a, XY b){
+   bool a_better =false;
+   a_better = ((a.x < b.x)&&(a.y <= b.y)) || ((a.x <= b.x)&&(a.y < b.y));
+   return a_better;
+
+}
+
+
+
 
 __global__ 
 void name_maker(const char *input, int *output){

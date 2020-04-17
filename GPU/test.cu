@@ -4,35 +4,39 @@
 #include <numeric>    // std::accumulate()
 #include <cuda_runtime.h>
 #include <cuda.h>
-#include "data/data.cpp"
 // #include "data/data-sanity-check.hpp"
+#include "data/data.cpp"
+#include <thrust/sort.h>
 // #include "data/test-data.hpp"
 
-#define N 60000 // num_blocks * num_thread_per_block 
-#define num_blocks 60
-#define num_thread_per_block  1000 //2048
+#define N 1
+#define num_blocks 2
+#define num_thread_per_block 1
 
 
 __device__  XY de_data_array[N]; // DATA XY values
+
 __device__  int manhatten_array[N]; // Manhatten distance
+
 __device__ int original_index[N]; // original index
+
+
 
 
 //dom returns True if a dominates b else false
 __host__ __device__
-bool dom(XY a, XY b)
-{
+bool dom(XY a, XY b){
    bool a_better =false;
    a_better = ((a.x < b.x)&&(a.y <= b.y)) || ((a.x <= b.x)&&(a.y < b.y));
    return a_better;
+
 }
 
 
 // spawn a thread for every node 
 // cacluate the manhaten distance and store to an array 
 __global__
-void MakeManhattan()
-{
+void MakeManhattan(){
    int index = threadIdx.x + (blockIdx.x * num_thread_per_block);
    int man = de_data_array[index].x + de_data_array[index].y;
    // printf("at index %d : %d\n",index,man);

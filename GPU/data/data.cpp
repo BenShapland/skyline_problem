@@ -59,7 +59,7 @@ void xy_data_gen(XY * data_array, int n, int seed){
 std::vector< XY > xy_data_gen_vector(int n, int seed){
     std::srand (seed);
     std::vector<XY> data;
-    for( auto i = 0u; i < n; ++i )
+    for( auto i = 0; i < n; ++i )
         {
             auto const x = ( std::rand() %1000 & ~1u );
             auto const y = ( std::rand() %1000 & ~1u );

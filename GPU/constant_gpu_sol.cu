@@ -2,23 +2,17 @@
 #include <vector>
 #include <chrono>     // timing library
 #include <numeric>    // std::accumulate()
-
 #include <cuda_runtime.h>
 #include <cuda.h>
-
 #include "data/data.cpp"
 // #include "data/data-sanity-check.hpp"
 // #include "data/test-data.hpp"
 
-
-
-#define N 16 // num_blocks * num_thread_per_block 
-#define num_blocks 1
-#define num_thread_per_block  16 //2048
-
+#define N 5000
+#define num_blocks 5
+#define num_thread_per_block 1000
 
 __constant__  XY de_data_array[N];
-
 
 __host__ __device__
 bool dom_old(XY a, XY b){
@@ -29,10 +23,10 @@ bool dom_old(XY a, XY b){
 }
 
 
-
 //dom returns True if a dominates b else false
 __host__ __device__
-bool dom(XY a, XY b){
+bool dom(XY a, XY b)
+{
    bool a_better =false;
    a_better = ((a.x < b.x)&&(a.y <= b.y)) || ((a.x <= b.x)&&(a.y < b.y));
    return a_better;
@@ -40,12 +34,10 @@ bool dom(XY a, XY b){
 }
 
 
-
 __global__ 
-void name_maker(const char *input, int *output){
-   int index = threadIdx.x + (blockIdx.x* num_thread_per_block);
-
- 
+void name_maker(const char *input, int *output)
+{
+   int index = threadIdx.x + (blockIdx.x* num_thread_per_block); 
    if(output[index] != 80085){
       int R_INDEX = threadIdx.x*4 + (blockIdx.x* num_thread_per_block *4);
       printf("%c%c%c%c\n"
@@ -70,7 +62,8 @@ void solv( int * counter )
 }
 
 
-int main(int argc, char** argv){
+int main(int argc, char** argv)
+{
    
    int seed=1;   // default value
    if(argc ==2){

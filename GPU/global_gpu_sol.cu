@@ -2,29 +2,16 @@
 #include <vector>
 #include <chrono>     // timing library
 #include <numeric>    // std::accumulate()
-
-
-#include <iostream> // for outputting (printing) to streams (e.g., the terminal)
-#include <random> 	// std::rand, std::srand, std::default_random_engine
-#include <cmath>	// sqrt()
-#include <cstring>   // std::strcmp()
-#include <fstream>   // std::ofstream
-#include <stdlib.h>  // srand(), rand()
-#include <algorithm> // std::sort(), std::for_each()
-#include <vector>
-#include <sstream>
-
 #include <cuda_runtime.h>
 #include <cuda.h>
-// #include "Node.h"
 #include "data/data.cpp"
 // #include "data/data-sanity-check.hpp"
 // #include "data/test-data.hpp"
 
 
-#define N 100000 // num_blocks * num_thread_per_block 
-#define num_blocks 100
-#define num_thread_per_block  1000 //2048
+#define N 5000
+#define num_blocks 5
+#define num_thread_per_block 1000
 
 
 __device__  XY de_data_array[N];
@@ -32,7 +19,8 @@ __device__  XY de_data_array[N];
 
 //dom returns True if a dominates b else false
 __host__ __device__
-bool dom(XY a, XY b){
+bool dom(XY a, XY b)
+{
    bool a_better =false;
    a_better = ((a.x < b.x)&&(a.y <= b.y)) || ((a.x <= b.x)&&(a.y < b.y));
    return a_better;
@@ -42,15 +30,16 @@ bool dom(XY a, XY b){
 
 
 __global__ 
-void name_maker(const char *input, int *output){
+void name_maker(const char *input, int *output)
+{
    int index = threadIdx.x + (blockIdx.x* num_thread_per_block);
 
  
    if(output[index] != 80085){
       int R_INDEX = threadIdx.x*4 + (blockIdx.x* num_thread_per_block *4);
-      printf("%c%c%c%c, "
+      printf("%c%c%c%c\n"
       ,input[R_INDEX],input[R_INDEX+1],input[R_INDEX+2],input[R_INDEX+3]);
-      printf("(%d,%d) \n", de_data_array[index].x,de_data_array[index].y);
+      // printf("(%d,%d) \n", de_data_array[index].x,de_data_array[index].y);
    }
 
 }

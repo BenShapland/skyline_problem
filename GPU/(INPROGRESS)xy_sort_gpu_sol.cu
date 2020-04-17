@@ -5,9 +5,6 @@
 #include <cuda_runtime.h>
 #include <cuda.h>
 #include <thrust/sort.h>
-
-
-
 #include "data/data-sanity-check.hpp"
 // #include "data/test-data.hpp"
 // #include "data/data.cpp"
@@ -17,19 +14,9 @@
 #define num_thread_per_block  16 //2048
 
 
-// #define N 600000 // num_blocks * num_thread_per_block 
-// #define num_blocks 600
-// #define num_thread_per_block  1000 //2048
-
-
-// __constant__  XY de_data_array[N];
 __device__  XY de_data_array[N]; // DATA XY values
-
 __device__  int manhatten_array[N]; // Manhatten distance
-
 __device__ int original_index[N]; // original index
-
-
 
 
 //dom returns True if a dominates b else false

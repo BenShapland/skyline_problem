@@ -42,10 +42,10 @@ OR
 cd SoA\ Hot\ and\ Cold/
 ```
 The command below is for bench marking two single core solutions, sort and brute force. 
-*number_of_nodes* is the size of the dataset.
+*N* is the size of the dataset.
 *num_ test_instances* is how many times the benchmark will run before it averages and returns the times. 
 ```
-command number_of_nodes num_ test_instances
+command N num_ test_instances
  ```
 #### Multi Core
 Multi core benchmarking. First open the multi core directory.
@@ -53,41 +53,48 @@ Multi core benchmarking. First open the multi core directory.
 cd Parallel/
  ```
 The command below is for bench marking two single core solutions, sort and brute force. 
-*number_of_nodes* is the size of the dataset.
+*N* is the size of the dataset, the number of nodes.
 *num_ test_instances* is how many times the benchmark will run before it averages and returns the times. 
 ```
 command number_of_nodes num_ test_instances
  ```
  ### GPU and comparing solutions  
- *number_of_nodes* is the size of the dataset.
- *number_of_blocks* how many blocks you want to run in your solution.
- *number_of_threads* number of threads spawned per block.
+ *N* is the size of the dataset, the number of nodes.
+ *blocks* how many blocks you want to run in your solution.
+ *threads* number of threads spawned per block.
  *random_seed* is an optianl number, it will generated data based on the number given. The ouput of each solution should be the same aslong as the *random_seed* is the same. 
  
- **Note:**  *number_of_nodes* should equal *number_of_blocks* x  *number_of_threads*.
+ **Note:**  *N* should equal *blocks* x  *threads*. Example: 4000 = 4 \* 1000 
  ```
- Name_of_solution number_of_nodes number_of_blocks number_of_threads
- ./Name_of_solution RANDOM SEED
+ Example:
+ make -B Solution N=4000 blocks=4 threads=1000
+ ./Solution 5
  ```
+ In this example random seed is 5.
  ##### Constan Memory solution 
-Constant memory is small there for the number *number_of_nodes* should not be greater then 69696969 depending on model of GPU.
+Constant memory is small there for the number *N* should not be greater then 69696969 depending on model of GPU.
  ```
- command 
+ make -B gpuconstant N=4000 blocks=4 threads=1000
+ ./gpuconstant 5
+ 
  ```
  ##### Global Memory oplution
- *number_of_nodes* should not be greater then 69696969 depending on model of GPU.
+ *N* should not be greater then 69696969 depending on model of GPU.
   ```
- command 
+ make -B gpuglobal N=4000 blocks=4 threads=1000
+ ./gpuglobal 5
  ```
  ##### Shared Block Memory solution
- *number_of_nodes* should not be greater then 69696969 depending on model of GPU.
+ *N* should not be greater then 69696969 depending on model of GPU.
   ```
- command 
+ make -B gpushared N=4000 blocks=4 threads=1000
+ ./gpushared 5
  ```
- ##### Sort Based Solution
-This Sort based solution uses more global memmory then other solution there for the number *number_of_nodes* should not be greater then 69696969 depending on model of GPU.
+ ##### Sort Based Manhatten Solution
+This Sort based solution uses more global memmory then other solution there for the number *N* should not be greater then 69696969 depending on model of GPU.
   ```
- command 
+ make -B gpuman N=4000 blocks=4 threads=1000
+ ./gpuman 5
  ```
  ### Comparing Outputs of GPU solutions and CPU solutions
 Although inputing a *random_seed* is optional it can generated data based on the number given. The ouput of each solution should be the same aslong as the *random_seed* is the same. Running the command bellow will give the output of the multi core solution and the SoA single core solution.
@@ -95,8 +102,10 @@ Although inputing a *random_seed* is optional it can generated data based on the
 **Note:** The outputs on this command may be diffrent from the GPU because it does not always keep nodes that have the same value but different names. All outputs from the command should be included in the outputs of the commands above given that the same *random_seed* was used.
 
 ```
-CPU_solution number_of_nodes number_of_blocks number_of_threads
- ./Name_of_solution RANDOM SEED
+make cpu
+./cpu <num_data_points> <num_cores> <random_integer_seed>
+Example:
+./cpu 4000 6 5
 ```
 
 **Helpful commands for further investigatio**

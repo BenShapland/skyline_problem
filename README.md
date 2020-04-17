@@ -44,7 +44,7 @@ The command below is for benchmarking a brute force solution.
 make -B aos  
 ./aos 
  ```
- *./aos 10* can be run with any number, the number is the number of nodes in the data sets used for benchmarking.
+ **Optionaly:** *./aos 10* can be run with any number, the number is the number of nodes in the data sets used for benchmarking.
 ##### Structure of Arrays hot/cold split(SOA) 
 ```
 cd SoA\ Hot\ and\ Cold/
@@ -54,7 +54,7 @@ The command below is for benchmarking two single core solutions, sort and brute 
 make -B soa  
 ./soa 
  ```
- *./soa 10* can be run with any number, the number is the number of nodes in the data sets used for benchmarking.
+**Optionaly:** *./soa 10* can be run with any number, the number is the number of nodes in the data sets used for benchmarking.
 #### Multi Core
 Multi core benchmarking. First open the multi core directory.
 ```

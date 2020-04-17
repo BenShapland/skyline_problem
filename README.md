@@ -64,7 +64,7 @@ command number_of_nodes num_ test_instances
  *threads* number of threads spawned per block.
  *random_seed* is an optianl number, it will generated data based on the number given. The ouput of each solution should be the same aslong as the *random_seed* is the same. 
  
- **Note:**  *N* should equal *blocks* x  *threads*. Example: 4000 = 4 \* 1000 
+ **Note:**  *N* should equal to *blocks* multiplied by *threads*. Example: 4000 = 4 \* 1000 
  ```
  Example:
  make -B Solution N=4000 blocks=4 threads=1000

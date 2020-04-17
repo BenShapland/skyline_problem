@@ -31,22 +31,30 @@ then run the make file,
 ### CPU 
 #### Single Core
 Single core benchmarking. First open the single core directory.
-
 ```
 cd Single\ Core/
 ```
 Now open the folder you want to test Array of Structures(AoS) or Structure of Arrays hot/cold split(SOA):
+##### Array of Structures(AoS)
 ```
 cd AoS\ Single\ Core/
-OR
+```
+The command below is for benchmarking a brute force solution.
+```
+make -B aos  
+./aos 
+ ```
+ *./aos 10* can be run with any number, the number is the number of nodes in the data sets used for benchmarking.
+##### Structure of Arrays hot/cold split(SOA) 
+```
 cd SoA\ Hot\ and\ Cold/
 ```
-In AoS command below is for bench marking two single core solutions, sort and brute force. SoA only benchmarks a brute force solution. 
-*N* is the size of the dataset.
-*num_ test_instances* is how many times the benchmark will run before it averages and returns the times. 
+The command below is for benchmarking two single core solutions, sort and brute force.
 ```
-command N num_ test_instances
+make -B soa  
+./soa 
  ```
+ *./soa 10* can be run with any number, the number is the number of nodes in the data sets used for benchmarking.
 #### Multi Core
 Multi core benchmarking. First open the multi core directory.
 ```

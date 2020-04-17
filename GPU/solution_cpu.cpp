@@ -1,15 +1,18 @@
+// #ifndef CS586_UNIQUE
+// #define CS586_UNIQUE
+
 #include <cassert>		 // assert()
 #include <unordered_map>
 #include <iostream> 
 #include <omp.h>    // for multi-core parallelism
 #include <chrono> 
 
-
 #include <vector>
-#include "test-data.hpp"
-
+// #include "data/test-data.hpp"
+#include "data/data.cpp"
 
 using std::vector;
+
 
 
 bool Dominate(int ax,int ay, int bx, int by )
@@ -74,6 +77,7 @@ std::string  solve (Node const& input )
             XY xy_node( input.xy[i].x,input.xy[i].y);
             best.xy.push_back(xy_node) ;
             best.name.push_back(input.name[i]); 
+            // std::cout<<"INDEX: "<<i<<input.name[i]<<"\n";
         }
 
     }
@@ -200,25 +204,60 @@ std::string  solve_parallel (Node const& input )
 } // End func
 
 
-int main(){
+
+int main(int argc, char** argv){
+    // MUST INCLUDE \// #include "test-data.hpp"
+    // Node the_data;
+    // the_data.xy = data;
+    // the_data.name = data_name;
+    
+    if(argc !=3){
+    std::cout<<"Missing Argument: <num_data_points> <random_integer_seed>\n";
+    return 0;
+    }
+
+    std::istringstream a1(argv[1]);
+    std::istringstream a2(argv[2]);
+
+    int size =0;
+    int seed=1;
+    a1>>size; a2>>seed;
+    std::cout<<"-------------num_data_points: "<<size<<"--------\n";
+    std::cout<<"-------------Using seed: "<<seed<<"--------------\n";
 
     Node the_data;
-    the_data.xy = data;
-    the_data.name = data_name;
-    
+    the_data.xy = xy_data_gen_vector(size,seed);
 
+    char char_array[size*4];
+    char_array_gen(char_array,size,seed);
+    the_data.name = char_to_string_vector(char_array,size);;
+    
 
    // start timer 
    auto const start_time = std::chrono::system_clock::now();
 
 
     std::string ans = solve(the_data);
-
+    std::cout<<ans;
 
     // End timer 
     auto const end_time = std::chrono::system_clock::now();
     auto const elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>( end_time - start_time );
-    std::cout << "time: " << ( elapsed_time.count() ) << " us" << std::endl;
+    std::cout << "time CPU: " << ( elapsed_time.count() ) << " us" << std::endl;
+
+
+   // start timer 
+   auto const start_time_parallel = std::chrono::system_clock::now();
+
+
+    std::string ans_parallel = solve_parallel(the_data);
+    std::cout<<ans_parallel;
+
+    // End timer 
+    auto const end_time_parallel = std::chrono::system_clock::now();
+    auto const elapsed_time_parallel = std::chrono::duration_cast<std::chrono::microseconds>( end_time_parallel - start_time_parallel );
+    std::cout << "time CPU Parallel: " << ( elapsed_time_parallel.count() ) << " us" << std::endl;
+
     
 
     return 0;

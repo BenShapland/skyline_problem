@@ -41,7 +41,7 @@ cd AoS\ Single\ Core/
 OR
 cd SoA\ Hot\ and\ Cold/
 ```
-The command below is for bench marking two single core solutions, sort and brute force. 
+In AoS command below is for bench marking two single core solutions, sort and brute force. SoA only benchmarks a brute force solution. 
 *N* is the size of the dataset.
 *num_ test_instances* is how many times the benchmark will run before it averages and returns the times. 
 ```

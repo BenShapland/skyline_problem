@@ -35,11 +35,6 @@ gpushared:
 	nvcc -O3  shared_gpu_sol.cu -o gpushared
 
 
-test:
-	$(Script) $(N) $(blocks) $(threads) test.cu
-	nvcc -O3  test.cu -o test
-
-
 clean:
 	rm $(BINARIES)
 

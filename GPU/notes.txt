@@ -1,0 +1,43 @@
+
+In GPU Directory:
+cpu command:
+    default:    
+        num_data_points= 5000
+        num_cores=6
+        random_integer_seed=1
+
+
+        make cpu
+        ./cpu <num_data_points> <num_cores> <random_integer_seed>
+        can pass no parameters up to 3 
+            E.x ./cpu 10000
+            E.x ./cpu 10000 12
+            E.x ./cpu 10000 12 3
+        
+
+
+GPU command:
+    default values: 
+        N=5000
+        blocks=5
+        threads=1000
+        
+        scripts:
+            gpuglobal
+            gpuconstant
+            gpuman
+            gpushared
+
+        
+    make file as follows:
+        make -B gpuglobal // compile file with default values
+        make -B gpuglobal N=4000 blocks=4 threads=1000 -> Use 4 blocks and 1000 threads per block
+        make -B gpuglobal N=4000 blocks=400 threads=10 -> Use 400 blocks and 10 threads per block
+
+        Note: blocks*threads MUST be equal to N
+        Running code:
+        ./gpuglobal <random_integer_seed> 
+        E.x  ./gpuglobal   // default random_integer_seed=1
+        E.x  ./gpuglobal 5  // random_integer_seed=5
+
+        Same process for the other scripts

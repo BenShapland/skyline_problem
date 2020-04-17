@@ -3,7 +3,6 @@
 #include <iostream> 
 #include <omp.h>    // for multi-core parallelism
 #include <chrono> 
-
 #include <vector>
 // #include "data/test-data.hpp"
 #include "data/data.cpp"

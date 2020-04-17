@@ -8,9 +8,9 @@
 // #include "data/data-sanity-check.hpp"
 // #include "data/test-data.hpp"
 
-#define N 5000
-#define num_blocks 5
-#define num_thread_per_block 1000
+#define N 4000
+#define num_blocks 10
+#define num_thread_per_block 400
 
 __constant__  XY de_data_array[N];
 

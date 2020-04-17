@@ -9,8 +9,8 @@
 // #include "data/test-data.hpp"
 
 
-#define N 10000
-#define num_blocks 10
+#define N 5000
+#define num_blocks 5
 #define num_thread_per_block 1000
 
 

@@ -23,13 +23,12 @@ https://docs.google.com/document/d/1YMiDLCQd3QnpE150zXRuKwICiOqGe3Sxm3DOrDqNndQ/
 ANY PREREQUIRED COMMANDS to give permitions could be here
 First cd into the working directory.
 ```
-cd GPGPU_basic/GPU
+ex:
+cd Single\ Core
 ```
 then run the make file,
+
 ### CPU 
-```
-cd CPU
- ```
 #### Single Core
 Single core benchmarking. First open the single core directory.
 

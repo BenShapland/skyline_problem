@@ -22,99 +22,144 @@ https://docs.google.com/document/d/1YMiDLCQd3QnpE150zXRuKwICiOqGe3Sxm3DOrDqNndQ/
 ## Running the code 
 ANY PREREQUIRED COMMANDS to give permitions could be here
 First cd into the working directory.
-```
-ex:
-cd Single\ Core
-```
-then run the make file,
 
-### CPU 
-#### Single Core
+### Single Core
+There are 3 solutions for single core: AoS, SoA Basic, and SoA_XY. All 3 of these solutions can be benchmarked. Only SoA_XY can be compared the multi core solutions.
 Single core benchmarking. First open the single core directory.
 ```
 cd Single\ Core/
 ```
-Now open the folder you want to test Array of Structures(AoS) or Structure of Arrays hot/cold split(SOA):
+Now open the folder you want to test AoS, SoA Basic, and SoA_XY:
 ##### Array of Structures(AoS)
 ```
-cd AoS\ Single\ Core/
-```
-The command below is for benchmarking a brute force solution.
-```
+cd AoS\ Single\ Core/ 
 make -B aos  
 ./aos 
  ```
  **Optionaly:** *./aos 10* can be run with any number, the number is the number of nodes in the data sets used for benchmarking.
-##### Structure of Arrays hot/cold split(SOA) 
+##### Structure of Arrays Basic
 ```
-cd SoA\ Hot\ and\ Cold/
-```
-The command below is for benchmarking two single core solutions, sort and brute force.
-```
+cd SoA\ Basic/
 make -B soa  
 ./soa 
  ```
 **Optionaly:** *./soa 10* can be run with any number, the number is the number of nodes in the data sets used for benchmarking.
-#### Multi Core
-Multi core benchmarking. First open the multi core directory.
+##### Structure of Arrays XY Combined 
 ```
-cd Parallel/
- ```
-The command below is for bench marking two single core solutions, sort and brute force. 
-*N* is the size of the dataset, the number of nodes.
-*num_ test_instances* is how many times the benchmark will run before it averages and returns the times. 
+cd SoA\ XY
+make solution
 ```
-command number_of_nodes num_ test_instances
+The command bellow is for **benchmarking**.
+```
+./solution bench
+```
+**Optionaly:** *./solution bench 10 3* can be run with any numbers, 10 is the number of nodes in the data sets used for benchmarking and 3 is the number of times a test is ran.
+
+The command bellow is for **comparing** out puts with multi core and GPU solutions.
+```
+./solution compare
+``` 
+**Optionaly:** *./solution compare 1000 2* can be run with any numbers, 1000 is the number of nodes in the data sets and 2 is the seed used to generate those nodesn. To compare outputs it is important to use the same number of nodes and seed.
+
+The defult values used in compare equivalent across all solutions, this means that the outputs should be equivalent. 
+
+### Multi Core
+Multi core benchmarking. First open the multi core directory and make the files.
+```
+cd Parallel
+make parallel
  ```
- ### GPU and comparing solutions  
+The command bellow is for **benchmarking**.
+```
+./benchmark.sh
+```
+**Optionaly:** *./benchmark.sh 1000 6 50 * can be run with any numbers, 1000 is the number of nodes in the data sets used for benchmarking and 50 is the number of times a test is ran and 6 is the number of cores used.
+
+The command bellow is for **comparing** out puts with multi core and GPU solutions.
+```
+./parallel compare
+``` 
+**Optionaly:** *./solution compare 1000 6 2* can be run with any numbers, 1000 is the number of nodes in the data sets and 2 is the seed used to generate those nodesn and 6 is the number of cores used. To compare outputs it is important to use the same number of nodes and seed.
+
+The defult values used in compare equivalent across all solutions, this means that the outputs should be equivalent. 
+
+
+ ### GPU  
  *N* is the size of the dataset, the number of nodes.
  *blocks* how many blocks you want to run in your solution.
  *threads* number of threads spawned per block.
- *random_seed* is an optianl number, it will generated data based on the number given. The ouput of each solution should be the same aslong as the *random_seed* is the same. 
  
  **Note:**  *N* should equal to *blocks* multiplied by *threads*. Example: 4000 = 4 \* 1000 
  ```
  Example:
  make -B Solution N=4000 blocks=4 threads=1000
- ./Solution 5
  ```
  In this example random seed is 5.
  ##### Constan Memory solution 
 Constant memory is small there for the number *N* should not be greater then 69696969 depending on model of GPU.
  ```
  make -B gpuconstant N=4000 blocks=4 threads=1000
- ./gpuconstant 5
- 
  ```
+ The command bellow is for **benchmarking**.
+```
+ ./gpuconstant bench
+```
+**Optionaly:** *./gpuconstant bench 50* 50 is the number of times a test is ran.
+
+The command bellow is for **comparing** out puts with multi core and GPU solutions.
+```
+./gpuconstant compare
+``` 
+**Optionaly:** *./gpuconstant compare 5* 5 is the seed used to generate those nodes. To compare outputs it is important to use the same number of nodes and seed.
+
+The defult values used in compare equivalent across all solutions, this means that the outputs should be equivalent. 
+ 
  ##### Global Memory oplution
  *N* should not be greater then 69696969 depending on model of GPU.
   ```
  make -B gpuglobal N=4000 blocks=4 threads=1000
- ./gpuglobal 5
  ```
+  The command bellow is for **benchmarking**.
+```
+ ./gpuglobal bench
+```
+**Optionaly:** *./gpuglobal bench 50* 50 is the number of times a test is ran.
+
+The command bellow is for **comparing** out puts with multi core and GPU solutions.
+```
+./gpuglobal compare
+``` 
+**Optionaly:** *./gpuglobal compare 5* 5 is the seed used to generate those nodes. To compare outputs it is important to use the same number of nodes and seed.
+
+The defult values used in compare equivalent across all solutions, this means that the outputs should be equivalent.
+ 
  ##### Shared Block Memory solution
  *N* should not be greater then 69696969 depending on model of GPU.
   ```
  make -B gpushared N=4000 blocks=4 threads=1000
- ./gpushared 5
  ```
- ##### Sort Based Manhatten Solution
+   The command bellow is for **benchmarking**.
+```
+ ./gpushared bench
+```
+**Optionaly:** *./gpushared bench 50* 50 is the number of times a test is ran.
+
+The command bellow is for **comparing** out puts with multi core and GPU solutions.
+```
+./gpushared compare
+``` 
+**Optionaly:** *./gpushared compare 5* 5 is the seed used to generate those nodes. To compare outputs it is important to use the same number of nodes and seed.
+
+The defult values used in compare equivalent across all solutions, this means that the outputs should be equivalent.
+ 
+ ##### Sort Based Manhatten Solution (NOT FINISHED)
 This Sort based solution uses more global memmory then other solution there for the number *N* should not be greater then 69696969 depending on model of GPU.
   ```
  make -B gpuman N=4000 blocks=4 threads=1000
  ./gpuman 5
  ```
  ### Comparing Outputs of GPU solutions and CPU solutions
-Although inputing a *random_seed* is optional it can generated data based on the number given. The ouput of each solution should be the same aslong as the *random_seed* is the same. Running the command bellow will give the output of the multi core solution and the SoA single core solution.
-
-**Note:** The outputs on this command may be diffrent from the GPU because it does not always keep nodes that have the same value but different names. All outputs from the command should be included in the outputs of the commands above given that the same *random_seed* was used.
-
-```
-make cpu
-./cpu <num_data_points> <num_cores> <random_integer_seed>
-Example:
-./cpu 4000 6 5
-```
+Although inputing a *random_seed* is optional it can generated data based on the number given. The ouput of each solution should be the same aslong as the *random_seed* is the same. The defult values used in compare equivalent across all solutions, this means that the outputs should be equivalent. Any differences in output may come from the fact that some solutions do not keep nodes that have the same XY values even if they have different names. All inputs of the CPU solutions should be contained in the GPU solutions. When doing sanity checks the XY values were printed.
 
 **Helpful commands for further investigatio**
 ```

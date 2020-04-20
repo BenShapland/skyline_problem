@@ -5,16 +5,10 @@
 #include <cstdlib>
 #include <array>
 #include <cassert>		 // assert()
-
-
 #include "./Node.h"
 
 using namespace std; 
 using std::vector;
-
-
-// ------------------------------------------------------------------------------------//
-
 
 bool Dominate(int ax,int ay, int bx, int by ){
     if( ((ax < bx)&&(ay <= by)) || ((ax <= bx)&&(ay < by))){
@@ -82,15 +76,6 @@ std::string  solve (Node const& input )
 	
 }
 
-
-
-// --------------------------------------------------------------------// 
-
-
-/*
- * Simple main function:
- * Read two numbers and write their sum
- */  
 int main() 
 { 
 
@@ -118,9 +103,6 @@ int main()
 
     std::string ans = solve(skyline_paper);
     std::cout<< ans;
-
-
-    
 
 
     return 0; 

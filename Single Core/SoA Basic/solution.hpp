@@ -1,17 +1,12 @@
-#ifndef CS586_UNIQUE
-#define CS586_UNIQUE
-
 #include <cassert>		 // assert()
 #include <unordered_map>
 #include <iostream> 
 #include <omp.h>    // for multi-core parallelism
 
 
-
 namespace skyline {
 namespace solution {
 using std::vector;
-
 
 
 bool Dominate(int ax,int ay, int bx, int by ){
@@ -30,7 +25,7 @@ std::string  solve (Node const& input )
     
    	Node best;
     
-    bool update = true;
+    // bool update = true;
     int count =0;
 
     // while(update){
@@ -61,23 +56,17 @@ std::string  solve (Node const& input )
                 }
             }
         }
-    // }
 
     std::string ret;   // save return value
-
-
     for(auto i=0u;i<best.name.size();i++){
-     
         ret = ret + best.name[i] +" ";
-
     }
     ret =ret+"\n";
-
-    return ret;
+    std::cout<<ret;
+    return " ";
 
 	
 }
 
 } 
 }
-#endif 

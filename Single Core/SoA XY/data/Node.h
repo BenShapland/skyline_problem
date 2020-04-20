@@ -7,14 +7,26 @@ class XY{
         int y;
 
 
+    XY(){
+    }
+
 
     XY(int a ,int b){
         x = a;
         y = b;
     }
 
+    // bool dominates(XY other){
+    //     if( ((x < other.x)&&(y <= other.y))
+    //      || ((x <= other.x)&&(y < other.y))){
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
 };
+// a.dom(b)
+
 
 
 class Node
@@ -41,7 +53,8 @@ class Node
     void print_node(){
 
         std::string ret_xy = "";
-        for (int i=0; i<name.size();i++)
+        int name_size =name.size();
+        for (int i=0; i<name_size;i++)
         {
             ret_xy = ret_xy + name[i] + " ";
 

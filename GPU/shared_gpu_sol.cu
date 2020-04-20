@@ -33,7 +33,7 @@ void name_maker(const char *input, int *output)
    int index = threadIdx.x + (blockIdx.x* num_thread_per_block);
    if(output[index] != 80085){
       int R_INDEX = threadIdx.x*4 + (blockIdx.x* num_thread_per_block *4);
-      printf("%c%c%c%c\n"
+      printf("%c%c%c%c "
       ,input[R_INDEX],input[R_INDEX+1],input[R_INDEX+2],input[R_INDEX+3]);
    }
 
@@ -77,14 +77,9 @@ __global__ void one_stencil (int *counter, int n)
 }
 
 
-int main(int argc, char** argv)
+int instance(int seed)
 {
-   int seed=1;   // default value
-   if(argc ==2){
-      std::istringstream a1(argv[1]);
-      a1>>seed;
-   }
-  
+
    XY data_array[N];
    xy_data_gen(data_array,N,seed);
    
@@ -106,23 +101,71 @@ int main(int argc, char** argv)
 
    // START
    auto const start_time = std::chrono::system_clock::now();
+
    one_stencil<<<num_blocks, num_thread_per_block>>>(de_counter,N);
    cudaDeviceSynchronize();
    name_maker<<<num_blocks, num_thread_per_block>>>(de_char_names, de_counter);
    cudaDeviceSynchronize();
 
-
    // END
    auto const end_time = std::chrono::system_clock::now();
    auto const elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>( end_time - start_time );
-   std::cout << "time: " << ( elapsed_time.count() ) << " us" << std::endl;
+   // std::cout << "time: " << ( elapsed_time.count() ) << " us" << std::endl;
    
    //free
    cudaFree(de_counter);
    cudaFree(de_char_names);
 
-   return 0; 
+   return elapsed_time.count(); 
 }
+
+int main(int argc, char** argv)
+{
+   int seed = 1;
+   int number_of_runs = 1000;
+   
+   int total_time=0;
+   if(argc < 2 ){
+      std::cout<<"Mode: compare or bench\n";
+      return 0;
+   }
+
+   std::string input = argv[1];  
+   if(argc==2 || argc==3){
+      if(argc==3){
+         std::istringstream a2(argv[2]);
+         a2>>number_of_runs;
+         seed = number_of_runs;;
+      }  
+      if (input == "bench" ){
+         printf("----------BENCHMARKING-----------\n");
+         // BENCHMARKING
+         std::cout<<"num of data_points: "<<N<<"\n";
+         std::cout<<"num of test runs: "<<number_of_runs<<"\n";    
+         for(auto i=0; i <number_of_runs; i++){
+            std::srand( (i *i*10000)/7 +4 );
+            seed = std::rand(); 
+            total_time += instance(seed);
+            std::cout<<"\n";
+         }
+         int avg_time = total_time/number_of_runs;
+         std::cout<<"avg_time: "<< avg_time <<" \n";
+      
+      }else if(input == "compare"){
+         printf("----------COMPARISON-----------\n");
+         std::cout<<"num of data_points: "<<N<<"\n";  
+         std::cout<<"using seed: "<<seed<<"\n";
+         total_time += instance(seed);
+         std::cout<<"\n";
+      }else{
+         std::cout<<"Mode: compare or bench\n";
+      }
+   }
+   else std::cout<<"Incorrect Number of Arguments\n";
+   return 0;
+
+}
+
 
 
 

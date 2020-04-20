@@ -1,8 +1,3 @@
- // int index = threadIdx.x + (blockIdx.x * num_thread_per_block);
-   // index = index_of_batch[index];
-   // printf("index[%d]\n",index);#ifndef CS586_UNIQUE
-#define CS586_UNIQUE
-
 #include <cassert>		 // assert()
 #include <unordered_map>
 #include <iostream> 
@@ -25,7 +20,9 @@ bool Dominate(Node a, Node b){
 int test(std::vector< Node > const& skyline){
 
     vector<Node> input = skyline;
-    for(int i=0;i<input.size();i++){
+    int input_size = input.size();
+
+    for(auto i=0;i< input_size;i++){
         Node n =input[i];
         std::cout<<"Input "<<n.print()<<"\n";
     }
@@ -35,7 +32,6 @@ int test(std::vector< Node > const& skyline){
 
 std::string solve ( std::vector< Node > const& skyline )  
 {
-	// assert( "Vector contains data" && ! input.empty() );
    	std::vector< Node > best;
 
     vector<Node> input = skyline;
@@ -69,7 +65,6 @@ std::string solve ( std::vector< Node > const& skyline )
         }
     }
 
-
     std::string ret;   // save return value
     for(auto i=0u;i<best.size();i++){
         Node n = best[i]; 
@@ -78,7 +73,8 @@ std::string solve ( std::vector< Node > const& skyline )
     }
     ret =ret+"\n";
 
-    return ret;
+    std::cout << ret;
+    return " ";
 }
 
 // Time comp : n + nlog(n)
@@ -106,12 +102,12 @@ std::string sort_solve ( std::vector< Node > const& skyline )  //const
         ret = ret + n.name +" ";
     }
     ret =ret +"\n";
-
-    return ret;
+    
+    std::cout << ret;
+    return " ";
 }
 
 
 } 
 } 
 
-#endif 

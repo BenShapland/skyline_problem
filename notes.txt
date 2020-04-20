@@ -1,0 +1,85 @@
+Single Core 
+
+    cd Single\ Core/
+
+    AOS Single Core
+        cd AoS\ Single\ Core/
+        make aos  
+        ./aos <num_data_points>
+        E.x ./aos   // use default 50000 data_points
+        E.x ./aos 10000 // use 10000 num_data_points
+    
+    -------------> OR <--------------------- 
+    SOA Basic Data Structure
+        cd SoA\ Basic/
+        make soa
+        ./soa <num_data_points>
+        E.x ./soa  // use default 50000 data_points
+        E.x ./soa 10000 // use 10000 num_data_points
+
+    -------------> OR <---------------------
+    SOA with XY Vector
+        cd SoA\ XY
+        make solution
+
+MODE:   compare
+        ./solution compare <num_data_points> <seed>  // Uses default num_data_points=5000 seed=1
+        E.x ./solution compare 1000 5 // num_data_points = 1000 and seed=5
+
+MODE: bench
+        ./solution bench <num_data_points> <num_test_runs> 
+        E.x  ./solution bench // Uses default num_data_points=5000 and 1000 test runs
+
+
+CPU Parallel 
+    cd Parallel
+    make parallel
+  
+MODE: compare
+    ./parallel compare <num_data_points> <num_cores> <seed> // Uses default num_data_points=5000  num_cores=6 seed=1
+    ./parallel compare  // Uses default num_data_points=5000 num_cores=6 seed=1
+    ./parallel compare  1000 4 5   // Uses default num_data_points=1000 num_cores=4 seed=5
+
+MODE: bench
+        ./benchmark.sh <num_data_points> <num_cores> <num_test_runs>
+        ./benchmark.sh  // num_data_points=5000 num_cores=6 num_test_runs=1000
+        ./benchmark.sh  1000 4 500  // num_data_points=1000 num_cores=4 num_test_runs=500
+
+        Note: Make sure benchmark.sh is executable
+
+
+
+
+GPU
+GPU command:
+    default values: 
+        N=5000
+        blocks=5
+        threads=1000
+        
+        scripts:
+            gpuglobal
+            gpuconstant
+            gpuman
+            gpushared
+
+        
+    make file as follows:
+        make -B gpuglobal // compile file with default values
+        make -B gpuglobal N=4000 blocks=4 threads=1000 -> Use 4 blocks and 1000 threads per block
+        make -B gpuglobal N=4000 blocks=400 threads=10 -> Use 400 blocks and 10 threads per block
+
+        Note: blocks*threads MUST be equal to N
+  
+       
+MODE: compare
+        ./gpuglobal compare <seed>
+        ./gpuglobal compare // use default seed=5 
+        ./gpuglobal compare 5 // seed=5
+
+MODE: bench        
+        ./gpuglobal bench <num_test_runs>
+        ./gpuglobal bench // use default num_test_runs=1000
+
+
+

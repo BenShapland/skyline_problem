@@ -2,12 +2,11 @@
 #include <iostream> // for outputting (printing) to streams (e.g., the terminal)
 #include <random> 	// std::rand, std::srand, std::default_random_engine
 #include <cmath>	// sqrt()
+#include <sstream>
 #include "timing.hpp"
 
-// #include "./solution.hpp"
+
 #include "./solution.hpp"
-
-
 
 
 using std::vector;
@@ -62,37 +61,14 @@ template < typename RandomGenerator >
 	}
 
 
-/**
- * A simple minimal working example (MWE) to test our timing benchmark. 
- */
-void mwe_benchmark()
-{
-	auto const n = 10000000u;
-
-	// Here we make extensive use of lambdas to create the input parameters for benchmark() in timing.hpp.
-	// The first lambda creates a functor on the fly that we will benchmark: we are benchmarking the built-in
-	// square root function.
-	// The random test instances that we create are just single values, generated with the built-in random
-	// generator that produces non-negative values. By providing that lambda to build_rand_vec, we get n
-	// random, non-negative values on which to test the sqrt() function's performance.
-	auto const avg_time = timing::benchmark::benchmark ( []( uint32_t const val ){ return sqrt( val ); }
-													   , build_rand_vec(
-															[]() {
-															   	return static_cast< uint32_t >( std::rand() );
-															}
-															, n )
-													   );
-
-
-	std::cout << "Average time per mwe function call = " << avg_time << " us" << std::endl;
-}
-
-
 struct skyline_vec
 {
 
-	u_int n = 20000;  // Number of data in arrays
-
+	public:
+		int n;
+	skyline_vec(int a){
+		n=a;
+	}
 
 	Node  operator() () const
 	{
@@ -103,15 +79,12 @@ struct skyline_vec
 		// or'ing with 1 ensures the value (used as a multiplier below) cannot be zero, by setting
 		// the least significant bit
 		Node nn;
-		for( auto i = 0u; i < n; ++i )
+		for( int i = 0u; i < n; ++i )
 		{
 			auto const x = ( std::rand() & ~1u );
 			auto const y = ( std::rand() & ~1u );
 			std::string name = random_string(4);//giving it a random length of 4
-
-
 			nn.add(x,y,name);  // To add to SoC data struct
-
 		}
 
 		return nn ;
@@ -122,26 +95,30 @@ struct skyline_vec
 /**
  * The function that is run when the application is launched. In this case, runs our benchmarks.
  */
-int main()
+int main(int argc, char** argv)
 {
-
+	int number_nodes=5000;   // default value
+	if(argc ==2){
+		std::istringstream a1(argv[1]);
+		a1>>number_nodes;
+	}
 	auto const num_test_instances = 50;
 
 	// For random numbers, one must first seed the random number generator. This is the idiomatic
 	// approach for the random number generator libraries that we have chosen.
 	std::srand ( static_cast< uint32_t >( std::time(0) ) );
 
-	// Run the sanity-check benchmark.
-	mwe_benchmark();
+	// // Run the sanity-check benchmark.
+	// mwe_benchmark();
 
 	// Create consistent random data to use with each algorithm/implementation.
-	auto const random_data = build_rand_vec( skyline_vec{}
+	auto const random_data = build_rand_vec( skyline_vec{number_nodes}
 										   , num_test_instances
 										   );
 	auto const time = timing::benchmark::benchmark( skyline::solution::solve,  random_data );
 
 
-	std::cout << "Average time per call       = " << time     << " us" << std::endl;
+	std::cout << "Average time per call brute force     = " << time     << " us" << std::endl;
 
 
 	return 0;

@@ -1,6 +1,4 @@
 
-// Simple C++ program to display "Hello World" 
-  
 #include<iostream>  
 #include<vector>
 #include<random>
@@ -19,19 +17,14 @@ using std::vector;
 //not looking at equal cases 
 bool Dominate(Node a, Node b){
     if( ((a.x < b.x)&&(a.y <= b.y)) || ((a.x <= b.x)&&(a.y < b.y))){
-        // a.print();
-        // b.print();
         return true;
 
     }
-    // cout<<"NO DOM";
     return false;
 }
 
 vector<Node> Solve(vector<Node> input){
     vector<Node> best;
-    // best.push_back(input[0]);
-
     cout<< "\n"<<input.size()<<"\n";
     int size = input.size();
     bool update = true;
@@ -97,12 +90,7 @@ vector<Node> sortSolve(vector<Node> input){
 
 }
 
-
-
-/*
- * Simple main function:
- * Read two numbers and write their sum
- */  
+ 
 int main() 
 { 
 

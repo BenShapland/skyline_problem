@@ -13,7 +13,6 @@ class Node
     
     }
 
-
     void add(int a,int b,std::string c){
         x.push_back(a);
         y.push_back(b);

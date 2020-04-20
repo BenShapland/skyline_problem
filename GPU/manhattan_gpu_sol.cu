@@ -153,6 +153,7 @@ int main(int argc, char** argv){
    
    // START
    auto const start_time = std::chrono::system_clock::now();
+   
    // for(){
    compare_D_to_batch <<< 2,8 >>>(starting_place,de_counter);
    cudaDeviceSynchronize();

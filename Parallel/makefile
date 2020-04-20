@@ -1,0 +1,9 @@
+.ONESHELL:
+
+
+parallel:
+	chmod +x benchmark.sh
+	g++ -Wall -O3 -std=c++17 -mavx -march=native -fopenmp parallel_solution.cpp -o parallel
+
+clean:
+	rm parallel

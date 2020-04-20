@@ -1,10 +1,3 @@
-/**
- * Timing library to benchmark and comparatively analyse different implementation approaches
- */
-
-#ifndef CS586_TIMING
-#define CS586_TIMING
-
 #include <algorithm> // std::for_each()
 #include <chrono>	 // timing libraries
 #include <iostream> // for outputting (printing) to streams (e.g., the terminal)
@@ -62,6 +55,4 @@ template < typename Callable, typename Container >
 
 
 } // namespace benchmark
-} // namespace csc586
-
-#endif // CS586_TIMING
+} // namespace timing

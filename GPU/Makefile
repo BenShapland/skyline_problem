@@ -1,3 +1,4 @@
+
 .ONESHELL:
 
 BINARIES = cpu gpuglobal gpuconstant gpuman gpushared
@@ -11,32 +12,37 @@ Script= ../run.sh
 data: 
 	g++ data_generator.cpp -o data
 
-cpu:
-	g++ -Wall -O3 -std=c++17 -mavx -march=native -fopenmp solution_cpu.cpp -o cpu
-
-
 gpuglobal:
+	chmod +x $(Script)
 	$(Script) $(N) $(blocks) $(threads) global_gpu_sol.cu
 	nvcc -O3  global_gpu_sol.cu -o gpuglobal
 
 
 gpuconstant:
+	chmod +x $(Script)
 	$(Script) $(N) $(blocks) $(threads) constant_gpu_sol.cu
 	nvcc -O3  constant_gpu_sol.cu -o gpuconstant
 
 
 gpuman:
+	chmod +x $(Script)
 	$(Script) $(N) $(blocks) $(threads) manhattan_gpu_sol.cu
 	nvcc -O3 manhattan_gpu_sol.cu -o gpuman
 
 
 gpushared:
+	chmod +x $(Script)
 	$(Script) $(N) $(blocks) $(threads) shared_gpu_sol.cu
 	nvcc -O3  shared_gpu_sol.cu -o gpushared
 
+test:
+	chmod +x $(Script)
+	$(Script) $(N) $(blocks) $(threads) test.cpp
+	g++ -Wall -O3 -std=c++17 -mavx -march=native -fopenmp test.cpp -o test
+
 
 clean:
-	rm $(BINARIES)
+	rm -f $(BINARIES)
 
 
 

@@ -19,7 +19,7 @@ void char_array_gen(char * char_array,int number_of_names, int seed){
     
  
     std::string alphabet="abcdefghijklmnopqrstuvwxyz";
-    for( int i = 0u; i < n; ++i )
+    for( auto i = 0u; i < n; ++i )
     {
         rando = std::rand() %26 ;
         char_array[i] = alphabet[rando]; 
@@ -48,7 +48,7 @@ std::vector<  std::string > char_to_string_vector(char * char_array,int number_o
 
 void xy_data_gen(XY * data_array, int n, int seed){
    std::srand (seed);
-   for( int i = 0u; i < n; ++i )
+   for( auto i = 0u; i < n; ++i )
     {
         auto const x = ( std::rand() %1000 & ~1u );
         auto const y = ( std::rand() %1000 & ~1u );

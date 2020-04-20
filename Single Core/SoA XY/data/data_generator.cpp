@@ -9,6 +9,7 @@
 #include <vector>
 #include <sstream>
 
+#include "Node.h"
 
 using std::vector;
 
@@ -78,13 +79,39 @@ void write_vector_XY_file( const char * filename, std::vector< uint32_t > x , st
 
     file << "XY " << name <<"_array" <<"[" << n <<"]" <<" = {";
     for(int i = 0 ; i <x.size()-1;i++){
-		file << "XY"<<"{" <16< x[i] << ", " << y[i] << "}, ";
+		file << "XY"<<"{" << x[i] << ", " << y[i] << "}, ";
 	}
     file << "XY"<< "{" << x[x.size()-1] << ", " << y[x.size()-1] << "}";
     file << " };";
     
+    file << "\n\n\n";
+    // AoS Basic
+    file << "std::vector< Node > "<< name << "_BASIC = {";
+    for(int i = 0 ; i <x.size()-1;i++){
+        file << "Node{ "<< x[i] << ", " << y[i] << ", "<< '"' <<ran_name[i] << '"'<<"},";
+    }
+    file << "Node{ "<< x[x.size()-1] << ", " << y[x.size()-1] << ", "<< '"'<<  ran_name[x.size()-1] << '"'<<"}};";
+    file << "\n\n\n";
 
-    
+    //SoA Basic
+    file << "std::vector< int > "<< name << "_x = {";
+    for(int i = 0 ; i <x.size()-1;i++){
+        file << "{ "<< x[i] << "}, ";
+    }
+    file << "{ "<< x[x.size()-1] << "}};";
+    file << "\n";
+    file << "std::vector< int > "<< name << "_y = {";
+    for(int i = 0 ; i <x.size()-1;i++){
+        file << "{ "<< y[i] << "}, ";
+    }
+    file << "{ "<< y[x.size()-1] << "}};";
+
+
+    file << "\n\n\n";
+
+
+
+
     file << "\n\n\n";
     file << "std::vector<  std::string > "<< name <<"_name"<<" = {";
     for(int i = 0 ; i <x.size()-1;i++){

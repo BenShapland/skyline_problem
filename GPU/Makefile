@@ -10,6 +10,7 @@ threads=1000
 Script= ../run.sh
 
 data: 
+	cd data
 	g++ data_generator.cpp -o data
 
 gpuglobal:

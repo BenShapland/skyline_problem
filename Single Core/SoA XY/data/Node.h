@@ -53,8 +53,7 @@ class Node
     void print_node(){
 
         std::string ret_xy = "";
-        int name_size =name.size();
-        for (int i=0; i<name_size;i++)
+        for (int i=0; i<name.size();i++)
         {
             ret_xy = ret_xy + name[i] + " ";
 

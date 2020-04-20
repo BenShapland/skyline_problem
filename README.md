@@ -24,7 +24,7 @@ https://docs.google.com/document/d/1YMiDLCQd3QnpE150zXRuKwICiOqGe3Sxm3DOrDqNndQ/
 First cd into the working directory.
 
 ### Single Core
-There are 3 solutions for single core: AoS, SoA Basic, and SoA XY. All 3 of these solutions can be benchmarked. The output of SoA XY can also be comapred for sanity check.
+There are 3 solutions for single core: AoS, SoA Basic, and SoA XY. All 3 of these solutions can be benchmarked. The output of SoA XY can also be comapred with other solutions.
 First open the Single Core directory.
 ```
 cd Single\ Core/
@@ -36,14 +36,14 @@ cd AoS\ Single\ Core/
 make aos  
 
  ```
- **Optionally:** *./aos 10*  can pass in *num_of_node* as an argument
+ **Optionally:** *./aos 10*  can pass in *num_of_nodes* as an argument
 ##### Structure of Arrays Basic
 ```
 cd SoA\ Basic/
 make soa  
 ./soa 
  ```
-**Optionally:** *./soa 10*  can pass in *num_of_node* as an argument
+**Optionally:** *./soa 10*  can pass in *num_of_nodes* as an argument
 ##### Structure of Arrays XY Combined 
 ```
 cd SoA\ XY
@@ -72,7 +72,7 @@ The command below is for **benchmarking**.
 ```
 ./benchmark.sh
 ```
-**Optionally:** *./benchmark.sh 1000 6 50 * can pass in 3 arguments:, *number_of_nodes* in the dataset used for benchmarking, number of cores *num_cores* and*num_test_run*.
+**Optionally:** *./benchmark.sh 1000 6 50 * can pass in 3 arguments:, *number_of_nodes* in the dataset used for benchmarking, number of cores *num_cores* and *num_test_run*.
 
 The command below is for **comparing** outputs with multicore and GPU solutions.
 ```

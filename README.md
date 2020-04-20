@@ -36,14 +36,14 @@ cd AoS\ Single\ Core/
 make aos  
 
  ```
- **Optionally:** *./aos 10*  can pass in *num_of_nodes* as an argument
+ **Optionally:** *./aos 10*  can pass in 1 argument *number_of_nodes* in the dataset
 ##### Structure of Arrays Basic
 ```
 cd SoA\ Basic/
 make soa  
 ./soa 
  ```
-**Optionally:** *./soa 10*  can pass in *num_of_nodes* as an argument
+**Optionally:** *./soa 10*  can pass in 1 argument *number_of_nodes* in the dataset
 ##### Structure of Arrays XY Combined 
 ```
 cd SoA\ XY

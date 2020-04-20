@@ -72,7 +72,7 @@ The command below is for **benchmarking**.
 ```
 ./benchmark.sh
 ```
-**Optionally:** *./benchmark.sh 1000 6 50 * can pass in 3 arguments:, *number_of_nodes* in the dataset used for benchmarking, number of cores *num_cores* and *num_test_run*.
+**Optionally:** *./benchmark.sh 1000 6 50* can pass in 3 arguments:, *number_of_nodes* in the dataset used for benchmarking, number of cores *num_cores* and *num_test_run*.
 
 The command below is for **comparing** outputs with multicore and GPU solutions.
 ```

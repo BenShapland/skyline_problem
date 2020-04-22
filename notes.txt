@@ -22,15 +22,15 @@ Single Core
         cd SoA\ XY
         make solution
 
-MODE:   compare
-        ./solution compare <num_data_points> <seed>  // Uses default num_data_points=5000 seed=1
-        E.x ./solution compare 1000 5 // num_data_points = 1000 and seed=5
+    MODE:   compare
+            ./solution compare <num_data_points> <seed>  // Uses default num_data_points=5000 seed=1
+            E.x ./solution compare 1000 5 // num_data_points = 1000 and seed=5
 
-MODE: bench
-        ./solution bench <num_data_points> <num_test_runs> 
-        E.x  ./solution bench // Uses default num_data_points=5000 and 1000 test runs
+    MODE: bench
+            ./solution bench <num_data_points> <num_test_runs> 
+            E.x  ./solution bench // Uses default num_data_points=5000 and 1000 test runs
 
-
+-------------------------------------------------------> CPU Parallel <-----------------------------------------------------
 CPU Parallel 
     cd Parallel
     make parallel
@@ -49,7 +49,7 @@ MODE: bench
 
 
 
-
+-------------------------------------------------------> GPGPU <-----------------------------------------------------
 GPU
 GPU command:
     default values: 
@@ -82,4 +82,5 @@ MODE: bench
         ./gpuglobal bench // use default num_test_runs=1000
 
 
+Replace gpuglobal by gpuconstant orgpushared
 

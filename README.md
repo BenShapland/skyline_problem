@@ -67,12 +67,13 @@ make parallel
  *blocks* how many blocks you want to run in your solution. Default is 5
  *threads* number of threads spawned per block. Default is 1000
 
- 
- **Note:**  *N* MUST be equal to *blocks* multiplied by *threads*. Example: 4000 = 4 \* 1000 
- ```
+ **Note:**  The number of nodes(N), blocks and threads per block need to be passed 
+            in at compile time by the makefile as followed:
+```
  Example:
  make -B Script N=4000 blocks=4 threads=1000
  ```
+ **Note:**  *N* MUST be equal to *blocks* multiplied by *threads*. Example: 4000 = 4 \* 1000 
 
 ### Constant Memory solution 
 Constant memory is small there for the number *N* should not be greater than 5000.

@@ -19,14 +19,14 @@ make aos
 
  ```
  **Optionally:** *./aos 10*  can pass in 1 argument *number_of_nodes* in the dataset
-### Structure of Arrays Basic
+### Structure of Arrays Basic(SoA)
 ```
 cd SoA\ Basic/
 make soa  
 ./soa 
  ```
 **Optionally:** *./soa 10*  can pass in 1 argument *number_of_nodes* in the dataset
-### Structure of Arrays XY Combined 
+### Structure of Arrays XY Combined(SoA_XY)
 ```
 cd SoA\ XY
 make solution

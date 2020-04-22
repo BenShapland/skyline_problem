@@ -145,14 +145,6 @@ The command below is for **comparing** outputs with multicore and GPU solutions.
 ``` 
 **Optionally:** *./gpushared compare 5* can pass in 1 argument: *seed*
 
- 
- ##### Sort Based Manhatten Solution (NOT FINISHED)
-This Sort based solution uses more global memmory then other solution there for the number *N* should not be greater then 69696969 depending on model of GPU.
-  ```
- make -B gpuman N=4000 blocks=4 threads=1000
- ./gpuman 5
- ```
-
 ### Note 
 1) To compare outputs it is important to use the same number of nodes and seed.
 2) The default values across each solutions are the same. Therefore when benchmarking without any arguments passed in, the results should match.

@@ -9,8 +9,8 @@
 // #include "data/test-data.hpp"
 
 
-#define N 5000
-#define num_blocks 5
+#define N 500000
+#define num_blocks 500
 #define num_thread_per_block 1000
 
 
@@ -26,8 +26,6 @@ bool dom(XY a, XY b)
    return a_better;
 
 }
-
-
 
 __global__ 
 void name_maker(const char *input, int *output)

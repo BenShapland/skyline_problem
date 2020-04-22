@@ -93,7 +93,7 @@ The command below is for **comparing** outputs with multicore and GPU solutions.
  ```
 
  ##### Constant Memory solution 
-Constant memory is small there for the number *N* should not be greater than 6000.
+Constant memory is small there for the number *N* should not be greater than 5000.
  ```
  make -B gpuconstant N=4000 blocks=4 threads=1000
  ```
@@ -111,7 +111,7 @@ The command below is for **comparing** outputs with multicore and GPU solutions.
  
  
  ##### Global Memory solution
- *N* should not be greater then 69696969 depending on model of GPU.
+ *N* should not be greater then 500000 depending on model of GPU.
   ```
  make -B gpuglobal N=4000 blocks=4 threads=1000
  ```
@@ -129,7 +129,7 @@ The command below is for **comparing** outputs with multicore and GPU solutions.
 
  
  ##### Shared Block Memory solution
- *N* should not be greater then 69696969 depending on model of GPU.
+ *N* should not be greater then 600000 depending on model of GPU.
   ```
  make -B gpushared N=4000 blocks=4 threads=1000
  ```
